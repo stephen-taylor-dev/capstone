@@ -6,3 +6,9 @@ from django.db import models
 class User(AbstractUser):
     pass
 
+class TextModel(models.Model):
+    author = models.TextField()
+    text = models.TextField()
+    title = models.TextField()
+
+

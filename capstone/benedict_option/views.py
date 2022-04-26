@@ -1,3 +1,4 @@
+from typing import Text
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, request
@@ -6,11 +7,15 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-from .models import User
+from .models import User, TextModel
 
 
 def index(request):
-    return render(request, "benedict_option/index.html")
+    text = get_object_or_404(TextModel, pk=1)
+
+    return render(request, "benedict_option/index.html", {
+    "text": text
+    })
 
 # Copied from CS33a Project 4. Modified url paths
 def login_view(request):

@@ -2,7 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 750px;
     
 }
 
@@ -11,4 +10,9 @@ h1{
 
     font-family: 'Herculanum';
    
+}
+
+p{
+    font-family: 'Herculanum';
+
 }
