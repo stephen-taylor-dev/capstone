@@ -1,4 +1,4 @@
-.center{
+#center{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6,7 +6,7 @@
 }
 
 
-h1{
+/* h1{
 
     font-family: 'Herculanum';
    
@@ -15,4 +15,4 @@ h1{
 p{
     font-family: 'Herculanum';
 
-}
+} */

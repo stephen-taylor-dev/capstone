@@ -17,6 +17,9 @@ def index(request):
     "text": text
     })
 
+def pray(request):
+    return render(request, "benedict_option/pray.html")
+
 # Copied from CS33a Project 4. Modified url paths
 def login_view(request):
     if request.method == "POST":
