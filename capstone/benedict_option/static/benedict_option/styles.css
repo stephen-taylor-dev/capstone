@@ -13,6 +13,11 @@
     width: 500px;
 }
 
+#text {
+    height: 500px;
+    overflow-y: scroll;
+}
+
 /* h1{
 
     font-family: 'Herculanum';
