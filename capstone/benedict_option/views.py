@@ -7,11 +7,11 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-from .models import User, TextModel
+from .models import User, Prayer
 
 
 def index(request):
-    text = get_object_or_404(TextModel, pk=1)
+    text = get_object_or_404(Prayer, pk=1)
 
     return render(request, "benedict_option/index.html", {
     "text": text
