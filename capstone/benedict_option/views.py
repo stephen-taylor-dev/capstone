@@ -6,16 +6,27 @@ from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+import random
 
 from .models import User, Prayer
 
 
 def index(request):
-    text = get_object_or_404(Prayer, pk=1)
-
+    count = Prayer.objects.count()
+    # Always load a random prayer on the first load up
+    text = get_object_or_404(Prayer, pk=random.randint(1, count))
     return render(request, "benedict_option/index.html", {
     "text": text
     })
+
+#def selectTime(request, time):
+
+
+
+def loadPrayer(request, prayer_id):
+    prayer = get_object_or_404(Prayer, pk=prayer_id)
+    return render(request, )
+
 
 def pray(request):
     return render(request, "benedict_option/pray.html")

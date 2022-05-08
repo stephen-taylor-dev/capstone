@@ -14,7 +14,7 @@ class Prayer(models.Model):
     text = models.TextField()
     title = models.CharField(max_length=255)
     type = models.CharField(max_length=255)
-    length = models.IntegerField
+    length = models.IntegerField()
 
     def __str__(self):
         return f"{self.title} - {self.author} - {self.type}"
