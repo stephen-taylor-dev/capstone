@@ -19,7 +19,7 @@ def index(request):
     "text": text
     })
 
-#def selectTime(request, time):
+# def selectTime(request, time):
 
 
 
