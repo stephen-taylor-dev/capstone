@@ -8,4 +8,7 @@ urlpatterns = [
     path("register", views.register, name="register"),
     path("pray", views.pray, name="pray"),
 
+    # API Paths
+    path("prayer/<int:length>", views.loadPrayerLength, name="loadPrayerLength"),
+
 ]

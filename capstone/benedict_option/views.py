@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 import random
-
+import json
 from .models import User, Prayer
 
 
@@ -23,9 +23,11 @@ def index(request):
 
 
 
-def loadPrayer(request, prayer_id):
-    prayer = get_object_or_404(Prayer, pk=prayer_id)
-    return render(request, )
+def loadPrayerLength(request, length):
+    prayer = get_object_or_404(Prayer, length=length)
+
+    test = prayer.to_json()
+    return JsonResponse(test, safe=False)
 
 
 def pray(request):

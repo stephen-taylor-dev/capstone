@@ -16,6 +16,17 @@ class Prayer(models.Model):
     type = models.CharField(max_length=255)
     length = models.IntegerField()
 
+    def to_json(self):
+        return {
+            "id": self.id,
+            "author": self.author,
+            "text": self.text,
+            "title": self.title,
+            "type": self.type,
+            "length": self.length,
+        }
+
     def __str__(self):
         return f"{self.title} - {self.author} - {self.type}"
+
 

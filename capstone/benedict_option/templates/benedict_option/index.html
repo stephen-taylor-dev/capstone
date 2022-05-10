@@ -60,16 +60,16 @@
                     <div class="card-body text-left py-4">
                         <div class="row">
                             <div class="col">
-                                <h1 class="card-title"> <i class="bi bi-book"></i> {{ text.title}} </h1>
+                                <h1 id="prayer-title"class="card-title"> <i class="bi bi-book"></i> {{ text.title}} </h1>
                             </div>
                             <div class="col">
                                 <h2><i class="bi bi-bookmark-star d-flex justify-content-end"></i></h2>
                             </div>
                         </div>
-                        <p class="lead card-subtitle text-muted mb-1"> by {{text.author }} </p>
+                        <p id="prayer-author" class="lead card-subtitle text-muted mb-1"> by {{text.author }} </p>
                         <hr>
                         <div id="text">
-                            <p class="lead"> {{ text.text }} </p>
+                            <p id="prayer-text" class="lead"> {{ text.text }} </p>
                         </div>
                     </div>
     
