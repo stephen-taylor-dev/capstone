@@ -10,5 +10,8 @@ urlpatterns = [
 
     # API Paths
     path("prayer/<int:length>", views.loadPrayerLength, name="loadPrayerLength"),
+    path("prayer-navigate/<int:id>", views.loadPrayer, name="loadPrayer"),
+    path("prayer-favorite", views.favoritePrayer, name="favoritePrayer"),
+    
 
 ]

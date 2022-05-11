@@ -6,32 +6,67 @@ from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 import random
 import json
-from .models import User, Prayer
+from .models import User, Prayer, Group
 
 
 def index(request):
-    count = Prayer.objects.count()
+    totalPrayers = Prayer.objects.count()
+    userGroups = Group.objects.filter(members=request.user.id)
+    
     # Always load a random prayer on the first load up
-    text = get_object_or_404(Prayer, pk=random.randint(1, count))
+    prayer = get_object_or_404(Prayer, pk=random.randint(1, totalPrayers))
+
     return render(request, "benedict_option/index.html", {
-    "text": text
+    "prayer": prayer,
+    "totalPrayers": totalPrayers,
+    "userGroups": userGroups,
     })
 
-# def selectTime(request, time):
-
-
-
 def loadPrayerLength(request, length):
-    prayer = get_object_or_404(Prayer, length=length)
+    prayers = Prayer.objects.filter(length=length)
+    prayer_count = prayers.count()
+    random_index = 0
+    if prayer_count >= 1:
+        random_index = random.randint(0, prayer_count-1)
+    prayer = prayers[random_index]
+    jsonPrayer = prayer.to_json()
+    return JsonResponse(jsonPrayer, safe=False)
 
-    test = prayer.to_json()
-    return JsonResponse(test, safe=False)
-
+def loadPrayer(request, id):
+    count = Prayer.objects.count()
+    if id > count:
+        return render(request, "benedict_option/index.html", {
+                "message": "Item not found in database"
+            })
+    prayer = get_object_or_404(Prayer, pk=id)
+    jsonPrayer = prayer.to_json()
+    return JsonResponse(jsonPrayer, safe=False)
 
 def pray(request):
     return render(request, "benedict_option/pray.html")
+
+
+@csrf_exempt
+def favoritePrayer(request):
+    if request.method == "POST":
+        user = User.objects.get(pk=request.user.id)
+        data = json.loads(request.body)
+        prayerID = data["prayer"]
+        user.favorite_prayers.add(int(prayerID))
+        user.save()
+        return JsonResponse({
+           "message": "Post edited successfully."}, status=201)
+
+def unfollow(request):
+    if request.method == "POST":
+        user = User.objects.get(pk=request.user.id)
+        # Removes the user's profile to authenticated user's following list
+        user.following.remove(int(request.POST["user_profile"]))
+        return HttpResponseRedirect(reverse("index"))
+
 
 # Copied from CS33a Project 4. Modified url paths
 def login_view(request):

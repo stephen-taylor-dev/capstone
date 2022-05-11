@@ -1,6 +1,8 @@
 {% extends "benedict_option/layout.html" %}
+{% load mathfilters %}
 
 {% block body %}
+
 
 <div class="container-fluid my-3">
     <div class="row justify-content-center">
@@ -19,7 +21,18 @@
             </div>
         </div>
 
-        <div class="col-3">
+        <div class="col-3 d-flex justify-content-end">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="groupButton" data-bs-toggle="dropdown" aria-expanded="false">
+              Your Group: {{request.user.current_group}}
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                {% for group in userGroups %}
+                <li><a class="dropdown-item" href="#"> {{ group }} </a></li>
+              {% endfor %}
+
+            </ul>
+          </div>
         </div>
     </div>
 </div>
@@ -60,26 +73,34 @@
                     <div class="card-body text-left py-4">
                         <div class="row">
                             <div class="col">
-                                <h1 id="prayer-title"class="card-title"> <i class="bi bi-book"></i> {{ text.title}} </h1>
+                                <h1 id="prayer-title"class="card-title"> <i class="bi bi-book"></i> {{ prayer.title}} </h1>
                             </div>
-                            <div class="col">
-                                <h2><i class="bi bi-bookmark-star d-flex justify-content-end"></i></h2>
+                            <div class="col">  
+                              <h2><i id="favorite-prayer" class="bi bi-bookmark-star d-flex justify-content-end" data-value1="{{ prayer.id }}"></i></h2>
                             </div>
                         </div>
-                        <p id="prayer-author" class="lead card-subtitle text-muted mb-1"> by {{text.author }} </p>
+                        <p id="prayer-author" class="lead card-subtitle text-muted mb-1"> by {{prayer.author }} </p>
+                        <p id="prayer-id" class="lead card-subtitle text-muted mb-1"> PrayerID {{ prayer.id }} </p>
                         <hr>
                         <div id="text">
-                            <p id="prayer-text" class="lead"> {{ text.text }} </p>
+                            <p id="prayer-text" class="lead"> {{ prayer.text }} </p>
                         </div>
                     </div>
     
                     <div class="row p-1">
-                        <div class="col ">
-                            
-                            <button type="button" class="btn btn-primary ">Prev. Prayer</button>
-                            <button type="button" class="btn btn-primary float-end">Next Prayer</button>
-                        </div>
+                        <div class="col d-flex justify-content-between">
+                            <button id="prev-button" type="button" class="navigate btn btn-primary " value="{{ prayer.id|sub:1 }}"><i class="bi bi-arrow-left-short"> </i>Prev. Prayer</button>
+                            <a class="random btn btn-primary " href="{% url 'index' %}" role="button"> Random Prayer</a>
+                            <button id="next-button" type="button" class="navigate btn btn-primary " data-value1="{{ totalPrayers }}" value="{{ prayer.id|addition:1 }}">Next Prayer <i class="bi bi-arrow-right-short"></i></button>
+
+                          </div>
                     </div>
+                    {% if message %}
+                    <div>
+                    <h5>{{ message }}</h5>
+                    </div>
+                  
+    {% endif %}
                     
                 </div>
             </div>
