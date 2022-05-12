@@ -14,8 +14,13 @@
 }
 
 #text {
-    height: 500px;
+    height: 580px;
     overflow-y: scroll;
+}
+
+.form-check-input:checked {
+    background-color: grey;
+    border-color: grey;
 }
 
 /* h1{

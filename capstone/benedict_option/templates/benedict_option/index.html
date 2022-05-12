@@ -2,12 +2,12 @@
 {% load mathfilters %}
 
 {% block body %}
-
+<div class="col">
 
 <div class="container-fluid my-3">
     <div class="row justify-content-center">
         <div class="col-3">
-            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i class="bi bi-search"></i> Search for a Prayer</button>
+            <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i class="bi bi-search"></i> Search for a Liturgy</button>
         </div>
     
         <div class="col-6 d-flex justify-content-center">
@@ -43,17 +43,25 @@
         <div class="row my-5 ">
 
             <div class="col-3 d-flex justify-content-end">
-                <div class="card border rounded  " style="width: 14rem; height: 305px;">
+                <div class="card border rounded  " style="width: 14rem; height: 310px;">
                     <div class="card-body">
-                      <h5 class="card-title">Prayer Filters</h5>
-                      <p class="card-text text-muted">Filter suggested prayers based on these categories.</p>
+                      <h5 class="card-title">Liturgy Filters</h5>
+                      <p class="card-text text-muted">Filter suggested liturgies based on these categories.</p>
                       <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
                         <label class="form-check-label" for="flexSwitchCheckChecked">Psalms</label>
                       </div>
                       <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                        <input class="form-check-input" type="checkbox"  id="flexSwitchCheckChecked" checked>
                         <label class="form-check-label" for="flexSwitchCheckChecked">Liturgical</label>
+                      </div>
+                      <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox"  id="flexSwitchCheckChecked" checked>
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Anabaptist</label>
+                      </div>
+                      <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox"  id="flexSwitchCheckChecked" checked>
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Early Church</label>
                       </div>
                       <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
@@ -63,7 +71,7 @@
                         <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
                         <label class="form-check-label" for="flexSwitchCheckChecked">User uploaded</label>
                       </div>
-                      <a href="#" class="btn btn-primary my-2">Filter</a>
+                      <a href="#" class="btn btn-secondary my-4">Filter</a>
                     </div>
                   </div>
             </div> 
@@ -79,8 +87,16 @@
                               <h2><i id="favorite-prayer" class="bi bi-bookmark-star d-flex justify-content-end" data-value1="{{ prayer.id }}"></i></h2>
                             </div>
                         </div>
-                        <p id="prayer-author" class="lead card-subtitle text-muted mb-1"> by {{prayer.author }} </p>
-                        <p id="prayer-id" class="lead card-subtitle text-muted mb-1"> PrayerID {{ prayer.id }} </p>
+                        <div class="row">
+                          <div class="col">
+                            <p id="prayer-author" class="lead card-subtitle text-muted mb-1"> by {{prayer.author }} </p>
+                          </div>
+                          <div class="col">  
+                            <p id="prayer-id" class="lead card-subtitle text-muted mb-1 d-flex justify-content-end"> About {{ prayer.length }} min.</p>
+  
+                          </div>
+                        </div>
+                        
                         <hr>
                         <div id="text">
                             <p id="prayer-text" class="lead"> {{ prayer.text }} </p>
@@ -89,9 +105,9 @@
     
                     <div class="row p-1">
                         <div class="col d-flex justify-content-between">
-                            <button id="prev-button" type="button" class="navigate btn btn-primary " value="{{ prayer.id|sub:1 }}"><i class="bi bi-arrow-left-short"> </i>Prev. Prayer</button>
-                            <a class="random btn btn-primary " href="{% url 'index' %}" role="button"> Random Prayer</a>
-                            <button id="next-button" type="button" class="navigate btn btn-primary " data-value1="{{ totalPrayers }}" value="{{ prayer.id|addition:1 }}">Next Prayer <i class="bi bi-arrow-right-short"></i></button>
+                            <button id="prev-button" type="button" class="navigate btn btn-secondary " value="{{ prayer.id|sub:1 }}"><i class="bi bi-arrow-left-short"> </i>Prev. Liturgy</button>
+                            <a class="random btn btn-secondary " href="{% url 'index' %}" role="button"> Random Liturgy</a>
+                            <button id="next-button" type="button" class="navigate btn btn-secondary " data-value1="{{ totalPrayers }}" value="{{ prayer.id|addition:1 }}">Next Liturgy <i class="bi bi-arrow-right-short"></i></button>
 
                           </div>
                     </div>
@@ -117,45 +133,45 @@
 
     <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
         <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Search a prayer...</h5>
+          <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Search a liturgy...</h5>
           <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-          <p>Here you can search for a particular prayer you are looking for.</p>
+          <p>Here you can search for a particular liturgy you are looking for.</p>
           
             <div class="container">
                 <form action="" method="post">
                     {% csrf_token %}
                     {% comment %} Search a Phrase {% endcomment %}
                     <div class="form-group">
-                        <label for="searchPrayer">Search a Prayer</label>
-                      <input type="text" name="title" class="form-control" id="searchPrayer" aria-describedby="searchPrayer" placeholder="Enter name or phrase of prayer you are searching for...">
-                      <button type="submit" class="btn btn-primary my-2">Search</button>
+                        <label for="searchPrayer">Search a Liturgy</label>
+                      <input type="text" name="title" class="form-control" id="searchPrayer" aria-describedby="searchPrayer" placeholder="Enter name or phrase of liturgy you are searching for...">
+                      <button type="submit" class="btn btn-secondary my-2">Search</button>
                     </div>
                 </form>
             </div>
 
             <hr>
           <!-- Advanced Search -->
-              <label for="searchPrayer">Advanced Search a Prayer</label>
+              <label for="searchPrayer">Advanced Search a Liturgy</label>
               <form action="" method="post">
                 {% csrf_token %}
                 {% comment %} Search Title {% endcomment %}
                 <div class="form-group">
-                  <small id="searchHelp" class="form-text text-muted">Prayer Title</small>
-                  <input type="text" name="title" class="form-control" id="searchTitle" aria-describedby="searchTitle" placeholder="Enter name of prayer you are searching for...">
+                  <small id="searchHelp" class="form-text text-muted">Liturgy Title</small>
+                  <input type="text" name="title" class="form-control" id="searchTitle" aria-describedby="searchTitle" placeholder="Enter name of liturgy you are searching for...">
                 </div>
           
                 {% comment %} Search Autho {% endcomment %}
                 <div class="form-group my-2">
-                  <small id="searchHelp" class="form-text text-muted">Prayer Author</small>
-                  <input type="text" name="title" class="form-control" id="searchTitle" aria-describedby="searchTitle" placeholder="Enter author of prayer you are searching for...">
+                  <small id="searchHelp" class="form-text text-muted">Liturgy Author</small>
+                  <input type="text" name="title" class="form-control" id="searchTitle" aria-describedby="searchTitle" placeholder="Enter author of liturgy you are searching for...">
                 </div>
           
                 {% comment %} Search Category {% endcomment %}
                 <div class="input-group my-3">
                   <div class="input-group-prepend">
-                    <label class="input-group-text" for="searchCategory">Prayer Category</label>
+                    <label class="input-group-text" for="searchCategory">Liturgy Category</label>
                   </div>
                   <select class="custom-select" id="searchCategory">
                     <option selected>Choose...</option>
@@ -168,12 +184,12 @@
           
                 {% comment %} Search for String {% endcomment %}
                 <div class="form-group">
-                  <small id="searchHelp" class="form-text text-muted">Prayer Phrase</small>
+                  <small id="searchHelp" class="form-text text-muted">Liturgy Phrase</small>
                   <input type="text" name="phrase" class="form-control" id="searchString" aria-describedby="searchString" placeholder="Enter phrase from payer you are searching for...">
                 </div>
               </form>
             
-              <button type="submit" class="btn btn-primary my-2">Search</button>
+              <button type="submit" class="btn btn-secondary my-2">Search</button>
 
         </div>
       </div>
@@ -182,7 +198,7 @@
 </div>
 
 
-
+</div>
 
 
 {% endblock %}

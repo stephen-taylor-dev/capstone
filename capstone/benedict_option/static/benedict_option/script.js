@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.querySelector("#prayer-text").innerHTML = data.text;
                 document.querySelector("#prev-button").value = data.id - 1;
                 document.querySelector("#next-button").value = data.id + 1;
+                document.querySelector("#prayer-id").innerHTML = "About " + data.length + " min.";
 
             })  
 
@@ -41,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                     //}
                     document.querySelector("#next-button").value = data.id + 1;
-                    document.querySelector("#prayer-id").innerHTML = "PrayerID " + data.id;
+                    document.querySelector("#prayer-id").innerHTML = "About " + data.length + " min.";
                     document.querySelector("#prayer-text").innerHTML = data.text;})
             }  
             else  {
