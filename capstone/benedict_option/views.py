@@ -25,6 +25,9 @@ def index(request):
     "userGroups": userGroups,
     })
 
+def loadFeed(request):
+    return render(request, "benedict_option/feed.html")
+
 def loadPrayerLength(request, length):
     prayers = Prayer.objects.filter(length=length)
     prayer_count = prayers.count()

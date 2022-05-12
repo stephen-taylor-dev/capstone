@@ -7,6 +7,7 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
     path("pray", views.pray, name="pray"),
+    path("feed", views.loadFeed, name="feed"),
 
     # API Paths
     path("prayer/<int:length>", views.loadPrayerLength, name="loadPrayerLength"),
