@@ -9,7 +9,7 @@ class User(AbstractUser):
     favorite_prayers = models.ManyToManyField("Prayer", related_name="favorite_prayers")
     uploaded_prayers = models.ManyToManyField("Prayer", related_name="uploaded_prayers")
     viewed_prayers = models.ManyToManyField("Prayer", related_name="viewed_prayers")
-    current_group = models.ForeignKey("Group", on_delete=models.CASCADE, related_name="current_group")
+    current_group = models.ForeignKey("Group", blank=True, null=True, on_delete=models.CASCADE, related_name="current_group")
    
 
 class Prayer(models.Model):
