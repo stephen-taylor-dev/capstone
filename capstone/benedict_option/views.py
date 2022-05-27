@@ -48,8 +48,20 @@ def loadPrayer(request, id):
     jsonPrayer = prayer.to_json()
     return JsonResponse(jsonPrayer, safe=False)
 
+# refactor this - copied from index function
 def pray(request):
-    return render(request, "benedict_option/pray.html")
+    totalPrayers = Prayer.objects.count()
+    userGroups = Group.objects.filter(members=request.user.id)
+    
+    # Always load a random prayer on the first load up
+    prayer = get_object_or_404(Prayer, pk=random.randint(1, totalPrayers))
+
+    return render(request, "benedict_option/pray.html", {
+    "prayer": prayer,
+    "totalPrayers": totalPrayers,
+    "userGroups": userGroups,
+    })
+
 
 
 @csrf_exempt

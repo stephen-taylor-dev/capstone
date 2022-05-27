@@ -4,6 +4,7 @@
 {% block body %}
 <div class="col">
 
+
 <div class="container-fluid my-3">
     <div class="row justify-content-center">
         <div class="col-3">
@@ -38,10 +39,12 @@
 </div>
     <!-- add 3 columns for the category box  -->
 
-    <!-- Prayer box -->
+    
+    <!-- filters box  -->
+    
     <div class="containter m-5" >
         <div class="row my-5 ">
-
+          {% block filters %}
             <div class="col-3 d-flex justify-content-end">
                 <div class="card border rounded  " style="width: 14rem; height: 310px;">
                     <div class="card-body">
@@ -72,10 +75,13 @@
                         <label class="form-check-label" for="flexSwitchCheckChecked">User uploaded</label>
                       </div>
                       <a href="#" class="btn btn-secondary my-4">Filter</a>
-                    </div>
                   </div>
-            </div> 
+              </div>
+        </div> 
+          {% endblock %}
 
+
+          <!-- Prayer box -->
             <div class="col-6">
                 <div class="card border rounded">
                     <div class="card-body text-left py-4">
@@ -121,7 +127,8 @@
                 </div>
             </div>
             <div class="col-3">
-                <span></span>
+              {% block videoChat %}
+              {% endblock %}
             </div>  
         
             </div>
