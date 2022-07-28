@@ -9,68 +9,68 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 import random
 import json
-from .models import User, Prayer, Group
+from .models import User, Liturgy, Group
 
 
 def index(request):
-    totalPrayers = Prayer.objects.count()
+    totalLiturgies = Liturgy.objects.count()
     userGroups = Group.objects.filter(members=request.user.id)
     
-    # Always load a random prayer on the first load up
-    prayer = get_object_or_404(Prayer, pk=random.randint(1, totalPrayers))
+    # Always load a random liturgy on the first load up
+    liturgy = get_object_or_404(Liturgy, pk=random.randint(1, totalLiturgies))
 
     return render(request, "benedict_option/index.html", {
-    "prayer": prayer,
-    "totalPrayers": totalPrayers,
+    "liturgy": liturgy,
+    "totalLiturgies": totalLiturgies,
     "userGroups": userGroups,
     })
 
 def loadFeed(request):
     return render(request, "benedict_option/feed.html")
 
-def loadPrayerLength(request, length):
-    prayers = Prayer.objects.filter(length=length)
-    prayer_count = prayers.count()
+def loadLiturgyLength(request, length):
+    liturgies = Liturgy.objects.filter(length=length)
+    liturgy_count = liturgies.count()
     random_index = 0
-    if prayer_count >= 1:
-        random_index = random.randint(0, prayer_count-1)
-    prayer = prayers[random_index]
-    jsonPrayer = prayer.to_json()
-    return JsonResponse(jsonPrayer, safe=False)
+    if liturgy_count >= 1:
+        random_index = random.randint(0, liturgy_count-1)
+    liturgy = liturgies[random_index]
+    jsonLiturgy = liturgy.to_json()
+    return JsonResponse(jsonLiturgy, safe=False)
 
-def loadPrayer(request, id):
-    count = Prayer.objects.count()
+def loadLiturgy(request, id):
+    count = Liturgy.objects.count()
     if id > count:
         return render(request, "benedict_option/index.html", {
                 "message": "Item not found in database"
             })
-    prayer = get_object_or_404(Prayer, pk=id)
-    jsonPrayer = prayer.to_json()
-    return JsonResponse(jsonPrayer, safe=False)
+    liturgy = get_object_or_404(Liturgy, pk=id)
+    jsonLiturgy = liturgy.to_json()
+    return JsonResponse(jsonLiturgy, safe=False)
 
 # refactor this - copied from index function
 def pray(request):
-    totalPrayers = Prayer.objects.count()
+    totalLiturgies = Liturgy.objects.count()
     userGroups = Group.objects.filter(members=request.user.id)
     
-    # Always load a random prayer on the first load up
-    prayer = get_object_or_404(Prayer, pk=random.randint(1, totalPrayers))
+    # Always load a random liturgy on the first load up
+    liturgy = get_object_or_404(Liturgy, pk=random.randint(1, totalLiturgies))
 
     return render(request, "benedict_option/pray.html", {
-    "prayer": prayer,
-    "totalPrayers": totalPrayers,
+    "liturgy": liturgy,
+    "totalliturgies": totalLiturgies,
     "userGroups": userGroups,
     })
 
 
 
 @csrf_exempt
-def favoritePrayer(request):
+def favoriteLiturgy(request):
     if request.method == "POST":
         user = User.objects.get(pk=request.user.id)
         data = json.loads(request.body)
-        prayerID = data["prayer"]
-        user.favorite_prayers.add(int(prayerID))
+        liturgyID = data["liturgy"]
+        user.favorite_liturgies.add(int(liturgyID))
         user.save()
         return JsonResponse({
            "message": "Post edited successfully."}, status=201)

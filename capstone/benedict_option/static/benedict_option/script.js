@@ -1,20 +1,20 @@
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Prayer Length Button Action
+    // Liturgy Length Button Action
     document.querySelectorAll('.time').forEach(timeButton => {
         timeButton.addEventListener('click', function() {
-            const prayerLength = timeButton.value  
-            // Makes a POST request to the server to get requested prayer data
+            const liturgyLength = timeButton.value  
+            // Makes a POST request to the server to get requested liturgy data
             // Runs the like view on the backend
-            fetch(`/prayer/${prayerLength}`)
+            fetch(`/liturgy/${liturgyLength}`)
             .then(response => response.json())
             .then(data => {
-                document.querySelector("#prayer-title").innerHTML = `<i class="bi bi-book"></i> ` + data.title;
-                document.querySelector("#prayer-author").innerHTML = "by " + data.author;
-                document.querySelector("#prayer-text").innerHTML = data.text;
+                document.querySelector("#liturgy-title").innerHTML = `<i class="bi bi-book"></i> ` + data.title;
+                document.querySelector("#liturgy-author").innerHTML = "by " + data.author;
+                document.querySelector("#liturgy-text").innerHTML = data.text;
                 document.querySelector("#prev-button").value = data.id - 1;
                 document.querySelector("#next-button").value = data.id + 1;
-                document.querySelector("#prayer-id").innerHTML = "About " + data.length + " min.";
+                document.querySelector("#liturgy-id").innerHTML = "About " + data.length + " min.";
 
             })  
 
@@ -24,29 +24,29 @@ document.addEventListener('DOMContentLoaded', function() {
     // Prev and Next Button Actions
     document.querySelectorAll('.navigate').forEach(navigateButton => {
         navigateButton.addEventListener('click', function() {
-            var prayerID = navigateButton.value
+            var liturgyID = navigateButton.value
             const nextButton = document.querySelector("#next-button");
-            var totalPrayers = nextButton.getAttribute("data-value1");
-            prayerID = parseInt(prayerID);
-            totalPrayers = parseInt(totalPrayers);
+            var totalLiturgies = nextButton.getAttribute("data-value1");
+            liturgyID = parseInt(liturgyID);
+            totalLiturgies = parseInt(totalLiturgies);
             
-            if (totalPrayers >= prayerID && prayerID > 0) { 
-                // Makes a request to the server to get requested prayer data
-                fetch(`/prayer-navigate/${prayerID}`)
+            if (totalLiturgies >= liturgyID && liturgyID > 0) { 
+                // Makes a request to the server to get requested liturgy data
+                fetch(`/liturgy-navigate/${liturgyID}`)
                 .then(response => response.json())
                 .then(data => {
-                    document.querySelector("#prayer-title").innerHTML = `<i class="bi bi-book"></i> ` + data.title;
-                    document.querySelector("#prayer-author").innerHTML = "by " + data.author;
+                    document.querySelector("#liturgy-title").innerHTML = `<i class="bi bi-book"></i> ` + data.title;
+                    document.querySelector("#liturgy-author").innerHTML = "by " + data.author;
                     document.querySelector("#prev-button").value = data.id - 1;
-                    // if (prayerID  == totalPrayers){
+                    // if (liturgyID  == totalLiturgies){
                         
                     //}
                     document.querySelector("#next-button").value = data.id + 1;
-                    document.querySelector("#prayer-id").innerHTML = "About " + data.length + " min.";
-                    document.querySelector("#prayer-text").innerHTML = data.text;})
+                    document.querySelector("#liturgy-id").innerHTML = "About " + data.length + " min.";
+                    document.querySelector("#liturgy-text").innerHTML = data.text;})
             }  
             else  {
-                alert("No more previous or next prayers in database")
+                alert("No more previous or next liturgys in database")
             }    
 
 
@@ -54,22 +54,22 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
 
-    // Favorite Prayer Button
-    document.querySelectorAll('#favorite-prayer').forEach(favoriteButton => {
+    // Favorite Liturgy Button
+    document.querySelectorAll('#favorite-liturgy').forEach(favoriteButton => {
         favoriteButton.addEventListener('click', function() {
-            const favoriteButton = document.querySelector("#favorite-prayer")
-            const prayerID = favoriteButton.getAttribute("data-value1")
-            //const prayerID = favoriteButton.value
-            console.log(prayerID)  
-            // Makes a POST request to the server to get requested prayer data
+            const favoriteButton = document.querySelector("#favorite-liturgy")
+            const liturgyID = favoriteButton.getAttribute("data-value1")
+            //const liturgyID = favoriteButton.value
+            console.log(liturgyID)  
+            // Makes a POST request to the server to get requested liturgy data
             // Runs the like view on the backend
 
-            fetch("/prayer-favorite", {
+            fetch("/liturgy-favorite", {
                 method: 'POST',
                 body: JSON.stringify({
                     // records who liked the post. based on the user logged in
                     //user: request.user.id,
-                    prayer: prayerID
+                    liturgy: liturgyID
                 })
                 
             })

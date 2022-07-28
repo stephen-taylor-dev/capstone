@@ -5,14 +5,17 @@ from django.db import models
 # Create your models here.
 
 class User(AbstractUser):
-    # Many to many relationship for Users to track their favorite prayers
-    favorite_prayers = models.ManyToManyField("Prayer", related_name="favorite_prayers")
-    uploaded_prayers = models.ManyToManyField("Prayer", related_name="uploaded_prayers")
-    viewed_prayers = models.ManyToManyField("Prayer", related_name="viewed_prayers")
+    # Many to many relationship for Users to track their favorite liturgies
+    favorite_liturgies = models.ManyToManyField("Liturgy", related_name="favorite_liturgies")
+    uploaded_liturgies = models.ManyToManyField("Liturgy", related_name="uploaded_liturgies")
+    viewed_liturgies = models.ManyToManyField("Liturgy", related_name="viewed_liturgies")
     current_group = models.ForeignKey("Group", blank=True, null=True, on_delete=models.CASCADE, related_name="current_group")
    
 
-class Prayer(models.Model):
+class Liturgy(models.Model):
+    # fixes plural display in admin console
+    class Meta:
+        verbose_name_plural = "liturgies"
     author = models.CharField(max_length=255)
     text = models.TextField()
     title = models.CharField(max_length=255)

@@ -1,4 +1,4 @@
-from  django.urls import path  
+from django.urls import path  
 from . import views  
 
 urlpatterns = [      
@@ -10,9 +10,9 @@ urlpatterns = [
     path("feed", views.loadFeed, name="feed"),
 
     # API Paths
-    path("prayer/<int:length>", views.loadPrayerLength, name="loadPrayerLength"),
-    path("prayer-navigate/<int:id>", views.loadPrayer, name="loadPrayer"),
-    path("prayer-favorite", views.favoritePrayer, name="favoritePrayer"),
+    path("liturgy/<int:length>", views.loadLiturgyLength, name="loadLiturgyLength"),
+    path("liturgy-navigate/<int:id>", views.loadLiturgy, name="loadLiturgy"),
+    path("liturgy-favorite", views.favoriteLiturgy, name="favoriteLiturgy"),
     
 
 ]
