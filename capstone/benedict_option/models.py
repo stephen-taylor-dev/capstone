@@ -6,10 +6,10 @@ from django.db import models
 
 class User(AbstractUser):
     # Many to many relationship for Users to track their favorite liturgies
-    favorite_liturgies = models.ManyToManyField("Liturgy", related_name="favorite_liturgies")
-    uploaded_liturgies = models.ManyToManyField("Liturgy", related_name="uploaded_liturgies")
-    viewed_liturgies = models.ManyToManyField("Liturgy", related_name="viewed_liturgies")
-    current_group = models.ForeignKey("Group", blank=True, null=True, on_delete=models.CASCADE, related_name="current_group")
+    favorite_liturgies = models.ManyToManyField("Liturgy", blank=True, related_name="favorite_liturgies")
+    uploaded_liturgies = models.ManyToManyField("Liturgy", blank=True, related_name="uploaded_liturgies")
+    viewed_liturgies = models.ManyToManyField("Liturgy", blank=True, related_name="viewed_liturgies")
+    active_group = models.ForeignKey("Group", blank=True, null=True, on_delete=models.CASCADE, related_name="active_group")
    
 
 class Liturgy(models.Model):
@@ -38,6 +38,12 @@ class Liturgy(models.Model):
 class Group(models.Model):
     name = models.CharField(max_length=255)
     members = models.ManyToManyField("User", related_name="group_members")
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+        }
 
     def __str__(self):
         return f"{self.name}"

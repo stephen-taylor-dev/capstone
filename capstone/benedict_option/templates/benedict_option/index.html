@@ -2,6 +2,8 @@
 {% load mathfilters %}
 
 {% block body %}
+{{ request.user.id|json_script:"user_id" }}
+
 <div class="col">
 
 
@@ -24,12 +26,17 @@
 
         <div class="col-3 d-flex justify-content-end">
           <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="groupButton" data-bs-toggle="dropdown" aria-expanded="false">
-              Your Group: {{request.user.current_group}}
+            <button class="btn btn-secondary dropdown-toggle" value="{{request.user.current_group.id}}" type="button" id="chooseGroupButton" data-bs-toggle="dropdown" aria-expanded="false">
+              Your Group: {{request.user.active_group}}
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                {% for group in userGroups %}
-                <li><a class="dropdown-item" href="#" id="{{ group.id }}" > {{ group }} </a></li>
+              <h6 class="dropdown-header">Your Groups</h6>
+              {% for group in userGroups %}
+                {% if group.id == request.user.current_group.id %}
+                  <li class="groups" value="{{ group.id }}"><a class="dropdown-item active" href="#"  > {{ group }} </a></li>
+                {% else %}
+                  <li class="groups" value="{{ group.id }}"><a class="dropdown-item" href="#"  > {{ group }} </a></li>
+                {% endif %}
               {% endfor %}
               <div class="dropdown-divider"></div>
               <h6 class="dropdown-header">Group Settings</h6>

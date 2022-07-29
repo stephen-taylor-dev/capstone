@@ -75,6 +75,23 @@ def favoriteLiturgy(request):
         return JsonResponse({
            "message": "Post edited successfully."}, status=201)
 
+@csrf_exempt
+def switchGroups(request):
+    if request.method == "POST":
+        user = User.objects.get(pk=request.user.id)
+        data = json.loads(request.body)
+        groupID = data["group"]
+        newGroup = get_object_or_404(Group, pk=groupID)
+        user.active_group = newGroup
+        user.save()
+        jsonGroup = newGroup.to_json()
+        return JsonResponse({
+           "group": jsonGroup,
+           "message": "Switched groups successfully."
+           }, safe=False, status=201)
+
+
+
 def unfollow(request):
     if request.method == "POST":
         user = User.objects.get(pk=request.user.id)
