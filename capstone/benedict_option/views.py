@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 import random
 import json
-from .models import User, Liturgy, Group
+from .models import User, Liturgy, Group, Group_Invite
 
 
 def index(request):
@@ -62,6 +62,51 @@ def pray(request):
     "userGroups": userGroups,
     })
 
+@csrf_exempt
+def sendGroupInvites(request):
+    # creating a new invite must be via POST
+    if request.method != "POST":
+        return JsonResponse({"error": "POST request required."}, status=400)
+
+    # Check recipient invites
+    data = json.loads(request.body)
+    email_addresses = [email.strip() for email in data.get("recipients").split(",")]
+    if email_addresses == [""]:
+        return JsonResponse({
+            "error": "At least one recipient required."
+        }, status=400)
+
+    # Convert email addresses to users
+    recipients = []
+    for address in email_addresses:
+        try:
+            user = User.objects.get(email=address)
+            recipients.append(user)
+        except User.DoesNotExist:
+            return JsonResponse({
+                "error": f"User with email {address} does not exist."
+            }, status=400)
+
+    # Get group name for invite
+    group = data.get("group", "")
+    print(group)
+    group = Group.objects.get(id=group)
+
+    # Create one invite for each recipient
+    users = set()
+    users.update(recipients)
+    for user in users:
+        invite = Group_Invite(
+            user=user,
+            sender=request.user,
+            group=group,
+        )
+        invite.save()
+        for recipient in recipients:
+            invite.receivers.add(recipient)
+        invite.save()
+
+    return JsonResponse({"message": "Invite sent successfully."}, status=201)
 
 
 @csrf_exempt
@@ -90,8 +135,7 @@ def switchGroups(request):
            "message": "Switched groups successfully."
            }, safe=False, status=201)
 
-
-
+ 
 def unfollow(request):
     if request.method == "POST":
         user = User.objects.get(pk=request.user.id)

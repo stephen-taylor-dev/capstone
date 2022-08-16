@@ -48,4 +48,13 @@ class Group(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+# Allows users to be invited to join groups
+class Group_Invite(models.Model):
+    user = models.ForeignKey("User", on_delete=models.CASCADE, related_name="invites")
+    sender = models.ForeignKey("User", blank=True, null=True, on_delete=models.CASCADE, related_name="sender")
+    receiver = models.ManyToManyField("User", related_name="receivers")
+    group = models.ForeignKey("Group", blank=True, null=True, on_delete=models.CASCADE, related_name="group")
+    timestamp = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f"{self.sender} invited {self.receiver} to group - {self.group}"

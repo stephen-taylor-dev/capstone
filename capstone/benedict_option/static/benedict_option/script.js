@@ -126,5 +126,33 @@ document.addEventListener('DOMContentLoaded', function() {
         })
     })
 
+    // Invite people to groups
+    inviteButton = document.querySelector('#sendGroupInvite');
+    inviteButton.addEventListener('click', function() {
+            const recipients = document.querySelector('#invite-recipients').value;
+            const group = inviteButton.getAttribute("data-value1")
+            console.log(recipients)
+            fetch("/send-invite", {
+                method: 'POST',
+                body: JSON.stringify({
+                    // records who liked the post. based on the user logged in
+                    //user: request.user.id,
+                    recipients: recipients,
+                    group: group
+                    
+                })
+                
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("sent invites")
+
+            })  
+
+        })
+            
+
+
+
 
 })
