@@ -89,7 +89,6 @@ def sendGroupInvites(request):
 
     # Get group name for invite
     group = data.get("group", "")
-    print(group)
     group = Group.objects.get(id=group)
 
     # Create one invite for each recipient
@@ -103,7 +102,7 @@ def sendGroupInvites(request):
         )
         invite.save()
         for recipient in recipients:
-            invite.receivers.add(recipient)
+            invite.receiver.add(recipient)
         invite.save()
 
     return JsonResponse({"message": "Invite sent successfully."}, status=201)
