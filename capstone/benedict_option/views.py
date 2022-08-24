@@ -48,6 +48,10 @@ def loadLiturgy(request, id):
     jsonLiturgy = liturgy.to_json()
     return JsonResponse(jsonLiturgy, safe=False)
 
+def test(request):
+    return render(request, "benedict_option/test.html")
+
+
 # refactor this - copied from index function
 def pray(request):
     totalLiturgies = Liturgy.objects.count()

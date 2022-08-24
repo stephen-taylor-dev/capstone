@@ -1,0 +1,30 @@
+{% extends "benedict_option/layout.html" %}
+
+
+{% block body %}
+<p class="h3 text-center">What are you working on?</p>
+    
+    <div class="form-group">
+        <input class="form-control" id="title" name="title" type="text" placeholder="Session Title">
+        <input class="form-control" id="description" name="description" type="text" placeholder="Session Description">
+    </div>
+        
+<p class="h3 text-center">Session Minutes</p>
+
+<div class="form-group">
+    <input autocomplete="off" focus class="form-control" value="25" id="set_time" name="set_time" placeholder="Minutes" type="number">
+    <button id="start" class="btn btn-success" type="submit" onclick="timer()">Start</button>
+    <button type="button" class="btn btn-danger" onclick="reset()">Reset</button>
+</div>
+
+<div>
+    <h1 class="display-1" id="countdown">00:00</h1>
+</div>
+
+<audio id="alarm">
+    <source src="/static/analog-watch-alarm.mp3", type="audio/mp3">   
+ </audio>
+
+
+
+ {% endblock %}
