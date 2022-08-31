@@ -47,7 +47,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     //}
                     document.querySelector("#next-button").value = data.id + 1;
                     document.querySelector("#liturgy-id").innerHTML = "About " + data.length + " min.";
-                    document.querySelector("#liturgy-text").innerHTML = data.text;})
+                    document.querySelector("#text-block").innerHTML = '<p id="liturgy-text" class="lead">' + ${data.text} + '</p>';
+                })
             }  
             else  {
                 alert("No more previous or next liturgys in database")
