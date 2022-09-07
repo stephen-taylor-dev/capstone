@@ -1,3 +1,4 @@
+from tokenize import group
 from typing import Text
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
@@ -9,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 import random
 import json
-from .models import User, Liturgy, Group, Group_Invite
+from .models import User, Liturgy, Group, Group_Invite, Comment, Prayer_Request
 
 
 def index(request):
@@ -23,6 +24,15 @@ def index(request):
     "liturgy": liturgy,
     "totalLiturgies": totalLiturgies,
     "userGroups": userGroups,
+    })
+
+def prayerRequests(request):
+    prayer_requests = Prayer_Request.objects.filter(group=request.user.active_group)
+    for request in prayer_requests:
+        print(request)
+    
+    return render(request, "benedict_option/requests.html",{
+        "prayer_request": prayer_requests,
     })
 
 def loadFeed(request):

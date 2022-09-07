@@ -33,11 +33,27 @@ D = Liturgy.objects.create(
     type='Psalm',
     length= 1
 )
-L.save()
 
+E = Liturgy.objects.create(
+    author='David',
+    text="1 Give ear to my words, O Lord, consider my meditation.\n\n2 Hearken unto the voice of my cry, my King, and my God: for unto thee will I pray.\n\n3 My voice shalt thou hear in the morning, O Lord; in the morning will I direct my prayer unto thee, and will look up.\n\n4 For thou art not a God that hath pleasure in wickedness: neither shall evil dwell with thee.\n\n5 The foolish shall not stand in thy sight: thou hatest all workers of iniquity.\n\n6 Thou shalt destroy them that speak leasing: the Lord will abhor the bloody and deceitful man.\n\n7 But as for me, I will come into thy house in the multitude of thy mercy: and in thy fear will I worship toward thy holy temple.\n\n8 Lead me, O Lord, in thy righteousness because of mine enemies; make thy way straight before my face.\n\n9 For there is no faithfulness in their mouth; their inward part is very wickedness; their throat is an open sepulchre; they flatter with their tongue.\n\n10 Destroy thou them, O God; let them fall by their own counsels; cast them out in the multitude of their transgressions; for they have rebelled against thee.\n\n11 But let all those that put their trust in thee rejoice: let them ever shout for joy, because thou defendest them: let them also that love thy name be joyful in thee.\n\n12 For thou, Lord, wilt bless the righteous; with favour wilt thou compass him as with a shield.",
+    title='Psalm 5',
+    type='Psalm',
+    length= 2
+)
 
+psalms = [A, B, C, D, E]
+for psalm in psalms:
+    psalm.save()
 
 Group.objects.create(
     name='Church',
-    members=
+)
+
+password = 'password'
+
+a = User.objects.create_user(
+    username='john',
+    email='john@email.com',
+    password=password,
 )

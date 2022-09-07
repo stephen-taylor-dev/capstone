@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     //}
                     document.querySelector("#next-button").value = data.id + 1;
                     document.querySelector("#liturgy-id").innerHTML = "About " + data.length + " min.";
-                    document.querySelector("#text-block").innerHTML = '<p id="liturgy-text" class="lead">' + ${data.text} + '</p>';
+                    document.querySelector("#text-block").innerHTML = data.text;
                 })
             }  
             else  {
