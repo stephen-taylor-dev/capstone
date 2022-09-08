@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.template.defaulttags import register
 import random
 import json
 from .models import User, Liturgy, Group, Group_Invite, Comment, Prayer_Request
@@ -26,13 +27,20 @@ def index(request):
     "userGroups": userGroups,
     })
 
+# Custom django filter to get dictionary key value
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)
+
 def prayerRequests(request):
+    comments = dict()
     prayer_requests = Prayer_Request.objects.filter(group=request.user.active_group)
-    for request in prayer_requests:
-        print(request)
-    
-    return render(request, "benedict_option/requests.html",{
-        "prayer_request": prayer_requests,
+    for item in prayer_requests:
+        comments[item.id] = item.comments.order_by("-date_created").all()
+    print(comments)
+    return render(request, "benedict_option/prayer-requests.html",{
+        "prayer_requests": prayer_requests,
+        "comments": comments,
     })
 
 def loadFeed(request):

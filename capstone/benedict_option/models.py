@@ -59,17 +59,20 @@ class Group_Invite(models.Model):
     def __str__(self):
         return f"{self.sender} invited {self.receiver} to group - {self.group}"
 
-class Comment(models.Model):
-    author = models.ForeignKey("User", on_delete=models.CASCADE, related_name="commentor")
-    prayer_request = models.ForeignKey("Prayer_Request",  on_delete=models.CASCADE, related_name="prayer_requests")
-    date_created = models.DateTimeField(auto_now_add=True)
-    message = models.TextField()
-    def __str__(self):
-        return f"{self.author} on Prayer Request ({self.prayer_request.id})"
 
 class Prayer_Request(models.Model):
     creator= models.ForeignKey("User", on_delete=models.CASCADE, related_name="creator")
     group = models.ForeignKey("Group", blank=True, null=True, on_delete=models.CASCADE, related_name="request_group")
     content = models.TextField()
-    comment = models.ForeignKey("Comment", blank=True, null=True, on_delete=models.CASCADE, related_name="comments")
     date_created = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f"{self.creator} in {self.group}"
+
+
+class Comment(models.Model):
+    author = models.ForeignKey("User", on_delete=models.CASCADE, related_name="commentor")
+    prayer_request = models.ForeignKey("Prayer_Request",  on_delete=models.CASCADE, related_name="comments")
+    date_created = models.DateTimeField(auto_now_add=True)
+    message = models.TextField()
+    def __str__(self):
+        return f"{self.author} on Prayer Request {self.prayer_request.id}"
