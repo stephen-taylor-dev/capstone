@@ -37,7 +37,6 @@ def prayerRequests(request):
     prayer_requests = Prayer_Request.objects.filter(group=request.user.active_group)
     for item in prayer_requests:
         comments[item.id] = item.comments.order_by("-date_created").all()
-    print(comments)
     return render(request, "benedict_option/prayer-requests.html",{
         "prayer_requests": prayer_requests,
         "comments": comments,
@@ -140,6 +139,21 @@ def favoriteLiturgy(request):
         user.save()
         return JsonResponse({
            "message": "Post edited successfully."}, status=201)
+
+@csrf_exempt
+def createComment(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        user = get_object_or_404(User, pk=request.user.id)
+        prayer_request = get_object_or_404(Prayer_Request, pk=data["prayer_request"])
+        comment = Comment(
+                author=user,
+                prayer_request=prayer_request,
+                message=data["message"])
+        comment.save()
+        return JsonResponse({
+           "message": "Comment created successfully."}, status=201)
+
 
 @csrf_exempt
 def switchGroups(request):

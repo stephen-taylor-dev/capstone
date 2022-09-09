@@ -23,7 +23,7 @@
                 <button value="600" type="button" class="time btn btn-secondary m-1">10 min.</button>
             </div>
         </div>
-
+        {% block groupSettings %}
         <div class="col-3 d-flex justify-content-end">
           <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" value="{{request.user.current_group.id}}" type="button" id="chooseGroupButton" data-bs-toggle="dropdown" aria-expanded="false">
@@ -49,6 +49,7 @@
             </ul>
           </div>
         </div>
+        {% endblock %}
     </div>
 </div>
     <!-- add 3 columns for the category box  -->
@@ -195,7 +196,7 @@
 </div>
 
 
-
+{% block groupManagement %}
 <!-- Invite to Group Modal -->
 <div class="modal fade" id="inviteGroupForm" tabindex="-1" aria-labelledby="inviteGroupFormLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -252,6 +253,7 @@
     </div>
   </div>
 </div>
+{% endblock %}
 
 
 </div>

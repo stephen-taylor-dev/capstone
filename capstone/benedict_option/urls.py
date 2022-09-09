@@ -17,6 +17,7 @@ urlpatterns = [
     path("liturgy-favorite", views.favoriteLiturgy, name="favoriteLiturgy"),
     path("switch-groups", views.switchGroups, name="switchGroups"),
     path("send-invite", views.sendGroupInvites, name="sendGroupInvites"),
+    path("create-comment", views.createComment, name="createComment"),
     
 
 ]

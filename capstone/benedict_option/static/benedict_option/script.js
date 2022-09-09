@@ -136,8 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
             fetch("/send-invite", {
                 method: 'POST',
                 body: JSON.stringify({
-                    // records who liked the post. based on the user logged in
-                    //user: request.user.id,
+
                     recipients: recipients,
                     group: group
                     
@@ -152,8 +151,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
         })
             
+        
+         // Create Comments
+         document.querySelectorAll('#create-comment-button').forEach(createCommentButton => {
+            createCommentButton.addEventListener('click', function() {
+                const commentMessage = document.querySelector('#comment-input').value;
+                const pr_id = createCommentButton.getAttribute("data-prid");
+                const group = createCommentButton.getAttribute("data-grid");
+                fetch("/create-comment", {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        // records who liked the post. based on the user logged in
+                        prayer_request: pr_id,
+                        message: commentMessage
+                        
+                    })
+                    
+                    
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("create comment")
 
+                })  
 
+            })
+                
+    
+            })
 
 
 })
