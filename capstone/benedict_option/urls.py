@@ -18,6 +18,8 @@ urlpatterns = [
     path("switch-groups", views.switchGroups, name="switchGroups"),
     path("send-invite", views.sendGroupInvites, name="sendGroupInvites"),
     path("create-comment", views.createComment, name="createComment"),
+    path("create-prequest", views.createPRequest, name="createPRequest"),
+    
     
 
 ]

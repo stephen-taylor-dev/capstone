@@ -34,7 +34,7 @@ def get_item(dictionary, key):
 
 def prayerRequests(request):
     comments = dict()
-    prayer_requests = Prayer_Request.objects.filter(group=request.user.active_group)
+    prayer_requests = Prayer_Request.objects.filter(group=request.user.active_group).order_by("-date_created").all()
     for item in prayer_requests:
         comments[item.id] = item.comments.order_by("-date_created").all()
     return render(request, "benedict_option/prayer-requests.html",{
@@ -154,6 +154,19 @@ def createComment(request):
         return JsonResponse({
            "message": "Comment created successfully."}, status=201)
 
+@csrf_exempt
+def createPRequest(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        user = get_object_or_404(User, pk=request.user.id)
+        p_requst = Prayer_Request(
+                creator=user,
+                group=user.active_group,
+                content=data["content"])
+        p_requst.save()
+        print(p_requst)
+        return JsonResponse({
+           "message": "Comment created successfully."}, status=201)
 
 @csrf_exempt
 def switchGroups(request):

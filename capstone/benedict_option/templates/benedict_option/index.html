@@ -65,8 +65,9 @@
           <button id="watch" type="button" class="btn btn-danger" value="Stop"><i class="bi bi-stop-circle"></i> </button>
           <button id="watch" type="button" class="btn btn-warning" value="Pause"><i class="bi bi-pause-circle"></i> </button>
           <p id='timer-time'> </p>
-
- <div class="timer fill"></div>
+          {% load static %}
+        <img class="clock" src="{% static 'benedict_option/34139.svg' %}">
+          <div class="timer fill"></div>
             {% endblock %}
             </div>
 
@@ -96,7 +97,7 @@
                         
                         <hr>
                         <div id="text-block">
-                            <p id="liturgy-text" class="lead"> {{ liturgy.text }} </p>
+                            <p id="liturgy-text" class="lead"> {{ liturgy.text}} </p>
                         </div>
                     </div>
     
