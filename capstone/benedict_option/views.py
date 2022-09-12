@@ -42,6 +42,11 @@ def prayerRequests(request):
         "comments": comments,
     })
 
+@csrf_exempt
+def searchLiturgy(request):
+    print(request.GET)
+    return render(request, "benedict_option/index.html")
+
 def loadFeed(request):
     return render(request, "benedict_option/feed.html")
 
@@ -65,8 +70,8 @@ def loadLiturgy(request, id):
     jsonLiturgy = liturgy.to_json()
     return JsonResponse(jsonLiturgy, safe=False)
 
-def test(request):
-    return render(request, "benedict_option/test.html")
+def search(request):
+    return render(request, "benedict_option/search.html")
 
 
 # refactor this - copied from index function

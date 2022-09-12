@@ -1,0 +1,69 @@
+{% extends "benedict_option/layout.html" %}
+
+
+{% block body %}
+
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Search a liturgy...</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <p>Here you can search for a particular liturgy you are looking for.</p>
+      
+        <div class="container">
+            <form action="{% url 'searchLiturgy' %}" method="get">
+                {% csrf_token %}
+                {% comment %} Search a Phrase {% endcomment %}
+                <div class="form-group">
+                    <label for="searchLiturgy">Search a Liturgy</label>
+                  <input type="text" name="title" class="form-control" id="searchLiturgy" aria-describedby="searchLiturgy" placeholder="Enter name or phrase of liturgy you are searching for...">
+                  <button type="submit" class="btn btn-secondary my-2">Search</button>
+                </div>
+            </form>
+        </div>
+
+        <hr>
+      <!-- Advanced Search -->
+          <label for="searchLiturgy">Advanced Search a Liturgy</label>
+          <form action="" method="get">
+
+            {% comment %} Search Title {% endcomment %}
+            <div class="form-group">
+              <small id="searchHelp" class="form-text text-muted">Liturgy Title</small>
+              <input type="text" name="title" class="form-control" id="searchTitle" aria-describedby="searchTitle" placeholder="Enter name of liturgy you are searching for...">
+            </div>
+      
+            {% comment %} Search Autho {% endcomment %}
+            <div class="form-group my-2">
+              <small id="searchHelp" class="form-text text-muted">Liturgy Author</small>
+              <input type="text" name="title" class="form-control" id="searchTitle" aria-describedby="searchTitle" placeholder="Enter author of liturgy you are searching for...">
+            </div>
+      
+            {% comment %} Search Category {% endcomment %}
+            <div class="input-group my-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="searchCategory">Liturgy Category</label>
+              </div>
+              <select class="custom-select" id="searchCategory">
+                <option selected>Choose...</option>
+                <option value="1">Psalm</option>
+                <option value="2">Litury</option>
+                <option value="3">Poem</option>
+                <option value="3">Devotional</option>
+              </select>
+            </div>
+      
+            {% comment %} Search for String {% endcomment %}
+            <div class="form-group">
+              <small id="searchHelp" class="form-text text-muted">Liturgy Phrase</small>
+              <input type="text" name="phrase" class="form-control" id="searchString" aria-describedby="searchString" placeholder="Enter phrase from payer you are searching for...">
+            </div>
+          </form>
+        
+          <button type="submit" class="btn btn-secondary my-2">Search</button>
+
+    </div>
+</div>
+
+ {% endblock %}

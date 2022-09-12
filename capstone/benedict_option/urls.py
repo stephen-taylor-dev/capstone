@@ -8,7 +8,7 @@ urlpatterns = [
     path("register", views.register, name="register"),
     path("pray", views.pray, name="pray"),
     path("feed", views.loadFeed, name="feed"),
-    path("test", views.test, name="test"),
+    path("search", views.search, name="search"),
     path("prayer-request", views.prayerRequests, name="prayer_requests"),
 
     # API Paths
@@ -19,6 +19,8 @@ urlpatterns = [
     path("send-invite", views.sendGroupInvites, name="sendGroupInvites"),
     path("create-comment", views.createComment, name="createComment"),
     path("create-prequest", views.createPRequest, name="createPRequest"),
+    path("search-liturgy", views.searchLiturgy, name="searchLiturgy"),
+    
     
     
 

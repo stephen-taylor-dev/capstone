@@ -49,7 +49,6 @@ function stopWatch(){
 
         clearInterval(timer);
 
-        $('input[type=button]#watch').val('Start');
 
         alert('Finished counting down from '+timerSeconds);
 
@@ -64,56 +63,46 @@ function stopWatch(){
 }
 
 $(document).ready(function(){
-    $('#watch').click();
+    
+    
+    $('#select-time').click(function(e){
+        var inputTime = this.value;
+        var htmlOutputTime = inputTime/60;
+        timerSeconds = inputTime;
+        $('#timer-time').html(htmlOutputTime + ' m');
+        
+    });
 
-    $('input[type=button]#percent').click(function(e){
-
+    $('.watch').click(function(e){
         e.preventDefault();
-        drawTimer($('input[type=text]#percent').val());
+        
+        if($('#watch').val() == 'Start'){
+
+            $('#watch').replaceWith('<button id="watch" type="button" class="btn btn-warning" value="Pause"><i class="bi bi-pause-circle"></i> </button>');
+            
+            timerCurrent = 0;
+            
+            timerFinish = new Date().getTime()+(timerSeconds*1000);
+            
+            timer = setInterval('stopWatch()',50);
+            
+        }
+        else if ($('#watch').val() == 'Pause'){
+            
+            $('#watch').replaceWith('<button id="watch" type="button" class="btn btn-success"  value="Start"><i class="bi bi-play-circle"></i> </button>');
+
+            
+
+        }
+        else{
+
+
+            clearInterval(timer);
+
+        }
 
     });
 
-    $('input[type=button]#size').click(function(e){
 
-        e.preventDefault();
-
-       // $('.timer').css('font-size',$('input[type=text]#size').val()+'px');
-
-    });
-    
-    $('.time').click(function(e){
-        var time = this.value;
-        var outputTime = time/60;
-        $('#timer-time').html(outputTime + ' min. ' + '<i class="bi bi-clock-history"></i>');
-        $('#watch').click(function(e){
-
-            e.preventDefault();
-    
-            if($('#watch').val() == 'Start'){
-    
-                $('#watch').val('Stop');
-    
-                timerSeconds = time;
-    
-                timerCurrent = 0;
-    
-                timerFinish = new Date().getTime()+(timerSeconds*1000);
-    
-                timer = setInterval('stopWatch()',50);
-    
-            }else{
-    
-                $('#watch').val('Start');
-    
-                clearInterval(timer);
-    
-            }
-    
-        });
-    });
-
-    
-
-    
 
 });
