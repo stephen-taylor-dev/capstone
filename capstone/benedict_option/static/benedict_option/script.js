@@ -131,14 +131,14 @@ document.addEventListener('DOMContentLoaded', function() {
     inviteButton = document.querySelector('#sendGroupInvite');
     inviteButton.addEventListener('click', function() {
             const recipients = document.querySelector('#invite-recipients').value;
-            const group = inviteButton.getAttribute("data-value1")
+            const group = inviteButton.getAttribute("data-value1");
             console.log(recipients)
             fetch("/send-invite", {
                 method: 'POST',
                 body: JSON.stringify({
 
                     recipients: recipients,
-                    group: group
+                    group: parseInt(group)
                     
                 })
                 
@@ -146,6 +146,26 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 console.log("sent invites")
+
+            })  
+
+        })
+
+        // Create group
+    createButton = document.querySelector('#createGroupInvite');
+    createButton.addEventListener('click', function() {
+            const group = document.querySelector('#createGroupFormName').value;
+            fetch("/create-group", {
+                method: 'POST',
+                body: JSON.stringify({
+                    group: group
+                    
+                })
+                
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("created group and sent invites")
 
             })  
 

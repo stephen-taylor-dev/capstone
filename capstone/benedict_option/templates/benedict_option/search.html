@@ -2,29 +2,26 @@
 
 
 {% block body %}
-
-<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Search a liturgy...</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <p>Here you can search for a particular liturgy you are looking for.</p>
+<div class="col">
+  <div class="container">
+      <div class="row mt-2">
+          <div class="col-3">
+          </div>
+          <div class="col-6">
+            <p>Here you can search for a particular liturgy you are looking for.</p>
       
-        <div class="container">
-            <form action="{% url 'searchLiturgy' %}" method="get">
-                {% csrf_token %}
-                {% comment %} Search a Phrase {% endcomment %}
-                <div class="form-group">
-                    <label for="searchLiturgy">Search a Liturgy</label>
-                  <input type="text" name="title" class="form-control" id="searchLiturgy" aria-describedby="searchLiturgy" placeholder="Enter name or phrase of liturgy you are searching for...">
-                  <button type="submit" class="btn btn-secondary my-2">Search</button>
-                </div>
-            </form>
-        </div>
+          <div class="container">
+              <form action="{% url 'searchLiturgy' %}" method="get">
+                  {% csrf_token %}
+                  {% comment %} Search a Phrase {% endcomment %}
+                  <div class="form-group">
+                      <label for="searchLiturgy">Search a Liturgy</label>
+                    <input type="text" name="title" class="form-control" id="searchLiturgy" aria-describedby="searchLiturgy" placeholder="Enter name or phrase of liturgy you are searching for...">
+                    <button type="submit" class="btn btn-secondary my-2">Search</button>
+                  </div>
+              </form>
 
-        <hr>
-      <!-- Advanced Search -->
+              <!-- Advanced Search -->
           <label for="searchLiturgy">Advanced Search a Liturgy</label>
           <form action="" method="get">
 
@@ -62,8 +59,12 @@
           </form>
         
           <button type="submit" class="btn btn-secondary my-2">Search</button>
+          </div>
+      </div>
+          <div class="col-3">
 
-    </div>
-</div>
+          
+      </div>
+  </div>
 
  {% endblock %}

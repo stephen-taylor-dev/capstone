@@ -41,7 +41,7 @@
                 <ul class="navbar-nav">
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'index' %}" ><strong> Welcome, {{ user.usernam|title }}</strong></a>
+                        <a class="nav-link" href="{% url 'index' %}" ><strong> Welcome, {{ user.username|title }}</strong></a>
                     </li>
                     {% endif %}
                     <li class="nav-item">

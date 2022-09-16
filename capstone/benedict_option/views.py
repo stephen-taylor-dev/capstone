@@ -13,6 +13,7 @@ import random
 import json
 from .models import User, Liturgy, Group, Group_Invite, Comment, Prayer_Request
 
+GROUP_ID = 0
 
 def index(request):
     totalLiturgies = Liturgy.objects.count()
@@ -88,6 +89,19 @@ def pray(request):
     "userGroups": userGroups,
     })
 
+
+@csrf_exempt
+def createGroup(request):
+    if request.method == "POST":
+        # Check recipient invites
+        user = get_object_or_404(User, pk=request.user.id)
+        data = json.loads(request.body)
+        newGroup = Group(name=data['group'])
+        newGroup.save()
+        newGroup.members.add(user)
+        return JsonResponse({
+           "message": "Created Group succesfully"}, status=201)
+
 @csrf_exempt
 def sendGroupInvites(request):
     # creating a new invite must be via POST
@@ -114,8 +128,9 @@ def sendGroupInvites(request):
             }, status=400)
 
     # Get group name for invite
-    group = data.get("group", "")
+    group = data.get("group", '')
     group = Group.objects.get(id=group)
+
 
     # Create one invite for each recipient
     users = set()
@@ -130,6 +145,7 @@ def sendGroupInvites(request):
         for recipient in recipients:
             invite.receiver.add(recipient)
         invite.save()
+        print(invite)
 
     return JsonResponse({"message": "Invite sent successfully."}, status=201)
 

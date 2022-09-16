@@ -29,7 +29,7 @@
         {% block groupSettings %}
         <div class="col-3 d-flex justify-content-end">
           <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" value="{{request.user.current_group.id}}" type="button" id="chooseGroupButton" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-secondary dropdown-toggle"  type="button" id="chooseGroupButton" data-bs-toggle="dropdown" aria-expanded="false">
               Your Group: {{request.user.active_group}}
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -152,7 +152,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss   nbm                          ="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss nbm ="modal">Close</button>
         <button type="button" data-value1="{{ request.user.active_group.id }}" id="sendGroupInvite" class="btn btn-primary">Send Invite(s)</button>
       </div>
     </div>
@@ -164,7 +164,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="createGroupFormLabel">Create a new group and add friends at the same time.</h5>
+        <h5 class="modal-title" id="createGroupFormLabel">Create a new group.</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -176,13 +176,7 @@
           <input type="text" id="createGroupFormName" class="form-control">
         </div>
 
-        <p class="text-muted">Enter your friends email addresses to add them to your group.</p>
-        <div class="md-form mb-5">
-          <label data-error="wrong" data-success="right" for="defaultForm-email">Email Addresses</label>
-          <i class="fas fa-envelope prefix grey-text"></i>
-          <input type="email" id="createGroupFormEmails" class="form-control validate">
-        </div>
-      </div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="button" id="createGroupInvite" class="btn btn-primary">Create Group</button>

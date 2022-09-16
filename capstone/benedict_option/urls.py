@@ -17,6 +17,7 @@ urlpatterns = [
     path("liturgy-favorite", views.favoriteLiturgy, name="favoriteLiturgy"),
     path("switch-groups", views.switchGroups, name="switchGroups"),
     path("send-invite", views.sendGroupInvites, name="sendGroupInvites"),
+    path("create-group", views.createGroup, name="createGroup"),
     path("create-comment", views.createComment, name="createComment"),
     path("create-prequest", views.createPRequest, name="createPRequest"),
     path("search-liturgy", views.searchLiturgy, name="searchLiturgy"),

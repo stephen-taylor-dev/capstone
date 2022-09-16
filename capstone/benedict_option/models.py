@@ -57,7 +57,7 @@ class Group_Invite(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.sender} invited {self.receiver} to group - {self.group}"
+        return f"{self.sender} invited {self.receiver.first()} to group - {self.group}"
 
 
 class Prayer_Request(models.Model):
