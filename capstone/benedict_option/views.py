@@ -35,7 +35,8 @@ def get_item(dictionary, key):
 
 def prayerRequests(request):
     comments = dict()
-    prayer_requests = Prayer_Request.objects.filter(group=request.user.active_group).order_by("-date_created").all()
+    prayer_requests = Prayer_Request.objects.filter(
+                    group=request.user.active_group).order_by("-date_created").all()
     for item in prayer_requests:
         comments[item.id] = item.comments.order_by("-date_created").all()
     return render(request, "benedict_option/prayer-requests.html",{
@@ -45,8 +46,14 @@ def prayerRequests(request):
 
 @csrf_exempt
 def searchLiturgy(request):
-    print(request.GET)
-    return render(request, "benedict_option/index.html")
+    query_dict = request.GET
+ 
+    search = Liturgy.objects.filter(text__contains=query_dict['phrase'])
+    title = query_dict.get("title")
+    print(search)
+    return render(request, "benedict_option/search.html", {
+
+    })
 
 def loadFeed(request):
     return render(request, "benedict_option/feed.html")

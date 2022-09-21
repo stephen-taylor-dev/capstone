@@ -23,7 +23,7 @@
                 <button id="select-time" value="600" type="button" class="time btn btn-secondary m-1">10 min.</button>
                 <button id="watch" type="button" class="watch btn btn-success" value="Start"><i class="bi bi-play-circle"></i> </button>
                 <button id="watch" type="button" class="watch btn btn-danger" value="Stop">Reset Timer</button>
-                <button id="watch" type="button" class="watch btn btn-warning" value="Pause"><i class="bi bi-pause-circle"></i> </button>
+                {% comment %} <button id="watch" type="button" class="watch btn btn-warning" value="Pause"><i class="bi bi-pause-circle"></i> </button> {% endcomment %}
             </div>
         </div>
         {% block groupSettings %}
@@ -152,7 +152,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss nbm ="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="button" data-value1="{{ request.user.active_group.id }}" id="sendGroupInvite" class="btn btn-primary">Send Invite(s)</button>
       </div>
     </div>
@@ -173,7 +173,7 @@
         <div class="md-form mb-5">
           <label >Group Name</label>
           <i class="fas fa-envelope prefix grey-text"></i>
-          <input type="text" id="createGroupFormName" class="form-control">
+          <input type="text" id="createGroupFormName" class="form-control" data-dismiss="modal">
         </div>
 
 
