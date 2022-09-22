@@ -47,12 +47,14 @@ def prayerRequests(request):
 @csrf_exempt
 def searchLiturgy(request):
     query_dict = request.GET
- 
-    search = Liturgy.objects.filter(text__contains=query_dict['phrase'])
+    search = Liturgy.objects.filter(title__contains="")
+    #search = search.exclude(text__contains='')
     title = query_dict.get("title")
     print(search)
+    num_results = search.count
     return render(request, "benedict_option/search.html", {
-
+        "search_results": search,
+        "num_results": num_results,
     })
 
 def loadFeed(request):
@@ -79,7 +81,10 @@ def loadLiturgy(request, id):
     return JsonResponse(jsonLiturgy, safe=False)
 
 def search(request):
-    return render(request, "benedict_option/search.html")
+    search_results = None
+    return render(request, "benedict_option/search.html", {
+        'search_results': search_results
+    })
 
 
 # refactor this - copied from index function
