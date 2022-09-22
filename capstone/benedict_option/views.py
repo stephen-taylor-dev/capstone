@@ -47,9 +47,11 @@ def prayerRequests(request):
 @csrf_exempt
 def searchLiturgy(request):
     query_dict = request.GET
-    search = Liturgy.objects.filter(title__contains="")
-    #search = search.exclude(text__contains='')
-    title = query_dict.get("title")
+    # Check to see if user searched for Title and Author or Phrase
+    if query_dict.get('title-author') == None:
+        search = Liturgy.objects.filter(text__contains=query_dict['phrase'])
+    else:
+        search = Liturgy.objects.filter(title__contains=query_dict['title-author']) | Liturgy.objects.filter(author__contains=query_dict['title-author'])
     print(search)
     num_results = search.count
     return render(request, "benedict_option/search.html", {
@@ -81,10 +83,7 @@ def loadLiturgy(request, id):
     return JsonResponse(jsonLiturgy, safe=False)
 
 def search(request):
-    search_results = None
-    return render(request, "benedict_option/search.html", {
-        'search_results': search_results
-    })
+    return render(request, "benedict_option/search.html",)
 
 
 # refactor this - copied from index function
@@ -267,7 +266,10 @@ def register(request):
 
         # Attempt to create new user
         try:
+            # Get public group
+            group = Group.objects.get(pk=1)
             user = User.objects.create_user(username, email, password)
+            user.active_group = group
             user.save()
         except IntegrityError:
             return render(request, "benedict_option/register.html", {

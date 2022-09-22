@@ -1,3 +1,4 @@
+from msilib.schema import PublishComponent
 from benedict_option.models import Liturgy, User, Group, Group_Invite
 
 
@@ -28,7 +29,7 @@ C = Liturgy.objects.create(
 
 D = Liturgy.objects.create(
     author='David',
-    text="1 Lord, how are they increased that trouble me! many are they that rise up against me.\n\n2 Many there be which say of my soul, There is no help for him in God. Selah.\n\n3 But thou, O Lord, art a shield for me; my glory, and the lifter up of mine head. \n\n4 I cried unto the Lord with my voice, and he heard me out of his holy hill. Selah.\n\n5 I laid me down and slept; I awaked; for the Lord sustained me.\n\n6 I will not be afraid of ten thousands of people, that have set themselves against me round about.\n\n7 Arise, O Lord; save me, O my God: for thou hast smitten all mine enemies upon the cheek bone; thou hast broken the teeth of the ungodly.\n\n8 Salvation belongeth unto the Lord: thy blessing is upon thy people. Selah.",
+    text="1 Hear me when I call, O God of my righteousness: thou hast enlarged me when I was in distress; have mercy upon me, and hear my prayer.\n\n2 O ye sons of men, how long will ye turn my glory into shame? how long will ye love vanity, and seek after leasing? Selah.\n\n3 But know that the Lord hath set apart him that is godly for himself: the Lord will hear when I call unto him.\n\n4 Stand in awe, and sin not: commune with your own heart upon your bed, and be still. Selah.\n\n5 Offer the sacrifices of righteousness, and put your trust in the Lord.\n\n6 There be many that say, Who will shew us any good? Lord, lift thou up the light of thy countenance upon us.\n\n7 Thou hast put gladness in my heart, more than in the time that their corn and their wine increased.\n\n8 I will both lay me down in peace, and sleep: for thou, Lord, only makest me dwell in safety.",
     title='Psalm 4',
     type='Psalm',
     length= 1
@@ -40,6 +41,17 @@ E = Liturgy.objects.create(
     title='Psalm 5',
     type='Psalm',
     length= 2
+)
+
+A.save()
+B.save()
+C.save()
+D.save()
+E.save()
+
+item = Group.objects.create(
+    name="Public"
+
 )
 
 psalms = [A, B, C, D, E]

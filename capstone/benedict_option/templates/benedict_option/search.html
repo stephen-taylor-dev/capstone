@@ -11,22 +11,21 @@
             <p class="fs-4">Search for a Specific Liturgy</p>
               <div class="container">
               <!-- Search -->
-              <label for="searchLiturgy">Search for either a title, author, phrase or all criteria</label>
+              <label for="searchLiturgyTitle">Search by Title or Author </label>
               <form action="{% url 'searchLiturgy' %}" method="get">
 
                 {% comment %} Search Title {% endcomment %}
                 <div class="form-group">
-                  <small id="searchHelp" class="form-text text-muted">Liturgy Title or Author</small>
-                  <input type="text" name="title-author" class="form-control" id="searchTitleAuthor" aria-describedby="searchTitle" placeholder="Enter title or author of liturgy you are searching for...">
+                  <input type="text" name="title-author" class="form-control" id="searchTitleAuthor" aria-describedby="searchTitle" placeholder="Enter title or author of a liturgy you are searching for...">
                 </div>
-              </form>
                 <button type="submit" class="btn btn-secondary my-2">Search</button>
-          
+              </form>
+              <hr>
                 {% comment %} Search for String {% endcomment %}
+              <label for="searchLiturgyPhrase">Search by Phrase </label>
               <form action="{% url 'searchLiturgy' %}" method="get">
                 <div class="form-group">
-                  <small id="searchHelp" class="form-text text-muted">Liturgy Phrase</small>
-                  <input type="text" name="phrase" class="form-control" id="searchString" aria-describedby="searchString" placeholder="Enter phrase from liturgy you are searching for...">
+                  <input type="text" name="phrase" class="form-control" id="searchString" aria-describedby="searchString" placeholder="Enter a phrase from a liturgy you are searching for...">
                 </div>
                 <button type="submit" class="btn btn-secondary my-2">Search</button>
               </div>
@@ -34,18 +33,40 @@
             <hr>
               <div id="search-results">
                 <p class="fs-5">Search Results</p>
-                {% if result.count == 0%}
+                {% if search_results %}
+                <p class="fs-6 fw-light"> {{num_results}} liturgies matching your search... </p>
+                {% for result in search_results %}
+              
+                  <div class="card border rounded shadow-sm mb-3">
+                    <div class="card-body text-left ">
+                        <div class="row">
+                            <div id="liturgy-title" class="col mb-0">
+                                
+                                  <p class="fs-4"><i class="bi bi-book"></i> {{result.title|title}}</p>
+                                
+                            </div>
+                            <div class="col d-flex justify-content-end mb-0" id="liturgy-author">
+                                <p class="fs-6 fw-light text-muted">by {{result.author}}</p>
+                            </div>
+                        </div>
 
+                        <div class="rounded-3 p-2 "  id="liturgy-text">
+                            <p class="ms-2 rounded border-primary">{{result.text}}
+                                
+                        </div>
+                      </div>
+                  </div>
+                  
+                  {% endfor %}
+                </div>
                 {% else %}
 
                 {% endif %}
-                {% for result in search_results %}
-                  <p> result </p>
-                {% endfor %}
+                
               </div>
-          </div>
-          <div class="col-3">
-          </div>
+              <div class="col-3">
+              </div>
+            </div>
       </div>
   </div>
 </div>

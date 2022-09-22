@@ -1,14 +1,17 @@
 from tkinter import CASCADE
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+import uuid
 
 # Create your models here.
 
 class User(AbstractUser):
+
     # Many to many relationship for Users to track their favorite liturgies
     favorite_liturgies = models.ManyToManyField("Liturgy", blank=True, related_name="favorite_liturgies")
     uploaded_liturgies = models.ManyToManyField("Liturgy", blank=True, related_name="uploaded_liturgies")
     viewed_liturgies = models.ManyToManyField("Liturgy", blank=True, related_name="viewed_liturgies")
+    # Everyone part of default public group
     active_group = models.ForeignKey("Group", blank=True, null=True, on_delete=models.CASCADE, related_name="active_group")
    
 
@@ -37,8 +40,11 @@ class Liturgy(models.Model):
 
 class Group(models.Model):
     name = models.CharField(max_length=255)
-    members = models.ManyToManyField("User", related_name="group_members")
-
+    members = models.ManyToManyField("User", blank=True, related_name="group_members")
+    unique_name = models.UUIDField(default=uuid.uuid4, editable=False)
+    group_admin = models.ForeignKey("User", blank=True, null=True, on_delete=models.CASCADE, related_name="admin")
+    current_prayer = models.ForeignKey("Liturgy", blank=True, null=True, on_delete=models.CASCADE, related_name="current_prayer")
+    
     def to_json(self):
         return {
             "id": self.id,
@@ -55,6 +61,7 @@ class Group_Invite(models.Model):
     receiver = models.ManyToManyField("User", related_name="receivers")
     group = models.ForeignKey("Group", blank=True, null=True, on_delete=models.CASCADE, related_name="group")
     timestamp = models.DateTimeField(auto_now_add=True)
+    accepted = models.BooleanField(null=True)
 
     def __str__(self):
         return f"{self.sender} invited {self.receiver.first()} to group - {self.group}"
