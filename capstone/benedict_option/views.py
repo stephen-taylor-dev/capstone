@@ -16,17 +16,21 @@ from .models import User, Liturgy, Group, Group_Invite, Comment, Prayer_Request
 GROUP_ID = 0
 
 def index(request):
-    totalLiturgies = Liturgy.objects.count()
-    userGroups = Group.objects.filter(members=request.user.id)
-    
-    # Always load a random liturgy on the first load up
-    liturgy = get_object_or_404(Liturgy, pk=random.randint(1, totalLiturgies))
-
-    return render(request, "benedict_option/index.html", {
-    "liturgy": liturgy,
-    "totalLiturgies": totalLiturgies,
-    "userGroups": userGroups,
-    })
+    if request.user.is_authenticated:
+        totalLiturgies = Liturgy.objects.count()
+        userGroups = Group.objects.filter(members=request.user.id)
+        
+        # Always load a random liturgy on the first load up
+        liturgy = get_object_or_404(Liturgy, pk=random.randint(1, totalLiturgies))
+        invites = Group_Invite.objects.filter(receiver=request.user, accepted=False)
+        return render(request, "benedict_option/index.html", {
+        "liturgy": liturgy,
+        "totalLiturgies": totalLiturgies,
+        "userGroups": userGroups,
+        "invites": invites,
+        })
+    else:
+        return HttpResponseRedirect(reverse("login"))
 
 # Custom django filter to get dictionary key value
 @register.filter
@@ -34,15 +38,18 @@ def get_item(dictionary, key):
     return dictionary.get(key)
 
 def prayerRequests(request):
-    comments = dict()
-    prayer_requests = Prayer_Request.objects.filter(
-                    group=request.user.active_group).order_by("-date_created").all()
-    for item in prayer_requests:
-        comments[item.id] = item.comments.order_by("-date_created").all()
-    return render(request, "benedict_option/prayer-requests.html",{
-        "prayer_requests": prayer_requests,
-        "comments": comments,
-    })
+    if request.user.is_authenticated:
+        comments = dict()
+        prayer_requests = Prayer_Request.objects.filter(
+                        group=request.user.active_group).order_by("-date_created").all()
+        for item in prayer_requests:
+            comments[item.id] = item.comments.order_by("-date_created").all()
+        return render(request, "benedict_option/prayer-requests.html",{
+            "prayer_requests": prayer_requests,
+            "comments": comments,
+        })
+    else:
+        return HttpResponseRedirect(reverse("login"))
 
 @csrf_exempt
 def searchLiturgy(request):
@@ -88,17 +95,20 @@ def search(request):
 
 # refactor this - copied from index function
 def pray(request):
-    totalLiturgies = Liturgy.objects.count()
-    userGroups = Group.objects.filter(members=request.user.id)
-    
-    # Always load a random liturgy on the first load up
-    liturgy = get_object_or_404(Liturgy, pk=random.randint(1, totalLiturgies))
+    if request.user.is_authenticated:
+        totalLiturgies = Liturgy.objects.count()
+        userGroups = Group.objects.filter(members=request.user.id)
+        
+        # Always load a random liturgy on the first load up
+        liturgy = get_object_or_404(Liturgy, pk=random.randint(1, totalLiturgies))
 
-    return render(request, "benedict_option/pray.html", {
-    "liturgy": liturgy,
-    "totalliturgies": totalLiturgies,
-    "userGroups": userGroups,
-    })
+        return render(request, "benedict_option/pray.html", {
+        "liturgy": liturgy,
+        "totalliturgies": totalLiturgies,
+        "userGroups": userGroups,
+        })
+    else:
+        return HttpResponseRedirect(reverse("login"))
 
 
 @csrf_exempt
@@ -148,15 +158,12 @@ def sendGroupInvites(request):
     users.update(recipients)
     for user in users:
         invite = Group_Invite(
-            user=user,
+
             sender=request.user,
+            receiver=user,
             group=group,
         )
         invite.save()
-        for recipient in recipients:
-            invite.receiver.add(recipient)
-        invite.save()
-        print(invite)
 
     return JsonResponse({"message": "Invite sent successfully."}, status=201)
 
@@ -248,7 +255,7 @@ def login_view(request):
 # Copied from CS33a Project 4. Modified url paths
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(reverse("login"))
 
 # Copied from CS33a Project 4. Modified url paths
 def register(request):
@@ -279,3 +286,20 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "benedict_option/register.html")
+
+
+@csrf_exempt
+def respondToInvite(request):
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        group_invite = get_object_or_404(Group_Invite, id=data['invitation_id'])
+        if data['delete'] == True:
+             group_invite.delete()
+        else:
+            user = get_object_or_404(User, id=request.user.id)
+            group = get_object_or_404(Group, id=data['group_id'])
+            group_invite.accepted = True
+            group_invite.save()
+            group.members.add(user)
+        return JsonResponse({
+           "message": "Group invited updated"}, status=201)

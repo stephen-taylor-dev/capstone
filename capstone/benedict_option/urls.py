@@ -21,6 +21,7 @@ urlpatterns = [
     path("create-comment", views.createComment, name="createComment"),
     path("create-prequest", views.createPRequest, name="createPRequest"),
     path("search-liturgy", views.searchLiturgy, name="searchLiturgy"),
+    path("respond-invite", views.respondToInvite, name="respondToInvite")
     
     
     

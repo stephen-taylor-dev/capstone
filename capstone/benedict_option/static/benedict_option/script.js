@@ -59,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
 
+
     // Favorite Liturgy Button
     document.querySelectorAll('#favorite-liturgy').forEach(favoriteButton => {
         favoriteButton.addEventListener('click', function() {
@@ -126,6 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         })
     })
+
 
     // Invite people to groups
     inviteButton = document.querySelector('#sendGroupInvite');
@@ -200,24 +202,68 @@ document.addEventListener('DOMContentLoaded', function() {
     
             })
 
-            // Invite people to groups
-        createPRequest = document.querySelector('#create-prequest-button');
-        createPRequest.addEventListener('click', function() {
-            const content = document.querySelector('#prayer-request-input').value;
-            fetch("/create-prequest", {
-                method: 'POST',
-                body: JSON.stringify({
-                    content: content,
-                })
+              
+        
+       
+       // Load invite modal 
+        document.querySelectorAll('#group-invite').forEach(respondInviteModal => {
+            respondInviteModal.addEventListener('click', function() {
                 
+                const sender = respondInviteModal.getAttribute('data-value1');
+                const group = respondInviteModal.getAttribute("data-value2");
+                const date = respondInviteModal.getAttribute("data-value3");
+                console.log(sender, group, date);
+                document.querySelector('#invite-information').innerHTML = `<p class="fs-5" id="invite-information"> ${sender} invited you to the group <strong>${group}</strong> at ${date}</p>`;
+
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Created Prayer Request")
+                
+    
+           })
+        // Respond to Group Invite
+        document.querySelectorAll('.submitResponse').forEach(respondInviteButton => {
+            respondInviteButton.addEventListener('click', function() {
+                
+            invite_data = document.querySelector('#group-invite');
+            const inviteID = invite_data.getAttribute('data-value4');
+            const groupID = invite_data.getAttribute('data-value5');
+            console.log(respondInviteButton.innerHTML)
+            if (respondInviteButton.innerHTML == 'Accept'){
+                fetch("/respond-invite", {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                        // records who liked the post. based on the user logged in
+                        invitation_id: inviteID,
+                        group_id: groupID,
+                        accepted: true,
+                        delete: false  
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("accepted invitation")
+                })  
+            }
+            else {
+                fetch("/respond-invite", {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                        // records who liked the post. based on the user logged in
+                        invitation_id: inviteID,
+                        accepted: false,
+                        delete: true,  
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("deleted invitation")
+                })  
+            }
 
-            })  
-
+            })
         })
+                
+    
+            
 
 
 })

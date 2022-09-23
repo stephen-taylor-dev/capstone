@@ -1,4 +1,7 @@
 {% extends "benedict_option/layout.html" %}
+{% load static  %}
+<script src="{% static 'benedict_option/prayer_request_script.js' %}"></script>
+
 {% block body %}
 {{ request.user.id|json_script:"user_id" }}
 <div class="col">
@@ -15,7 +18,7 @@
                           <input type="text" class="form-control" id="prayer-request-input" placeholder="Create a Prayer Request for your current group...">
                         </div>
                         <div class="col-auto">
-                          <button id="create-prequest-button" data-prid="{{p_request.id}}" class="btn btn-primary mb-1">Create Request</button>
+                          <button id="create-prequest-button"  class="btn btn-primary mb-1">Create Request</button>
                         </div>
                       </form>
                 </div>
@@ -163,6 +166,30 @@
     </div>
   </div>
 </div>
+
+<!-- Respond to Invitation -->
+<div class="modal fade" id="respondInvitationForm" tabindex="-1" aria-labelledby="respondFormInvitationLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="respondInvitationFormLabel">Respond to Group Invite.</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <p class="fs-5" id="invite-information"></p>
+  
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" id="respondToInviteDelete" class="btn btn-danger">Delete</button>
+        <button type="button" id="respondToInvite" class="btn btn-primary">Accept</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 {% endblock %}
+
+    

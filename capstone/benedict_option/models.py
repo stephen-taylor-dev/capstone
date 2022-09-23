@@ -13,7 +13,7 @@ class User(AbstractUser):
     viewed_liturgies = models.ManyToManyField("Liturgy", blank=True, related_name="viewed_liturgies")
     # Everyone part of default public group
     active_group = models.ForeignKey("Group", blank=True, null=True, on_delete=models.CASCADE, related_name="active_group")
-   
+
 
 class Liturgy(models.Model):
     # fixes plural display in admin console
@@ -56,15 +56,14 @@ class Group(models.Model):
 
 # Allows users to be invited to join groups
 class Group_Invite(models.Model):
-    user = models.ForeignKey("User", on_delete=models.CASCADE, related_name="invites")
     sender = models.ForeignKey("User", blank=True, null=True, on_delete=models.CASCADE, related_name="sender")
-    receiver = models.ManyToManyField("User", related_name="receivers")
+    receiver = models.ForeignKey("User", blank=True, null=True, on_delete=models.CASCADE, related_name="receiver")
     group = models.ForeignKey("Group", blank=True, null=True, on_delete=models.CASCADE, related_name="group")
     timestamp = models.DateTimeField(auto_now_add=True)
-    accepted = models.BooleanField(null=True)
+    accepted = models.BooleanField(default=False, null=True)
 
     def __str__(self):
-        return f"{self.sender} invited {self.receiver.first()} to group - {self.group}"
+        return f"{self.sender} invited {self.receiver } to group - {self.group}"
 
 
 class Prayer_Request(models.Model):
