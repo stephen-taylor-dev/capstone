@@ -12,7 +12,6 @@ urlpatterns = [
     path("prayer-request", views.prayerRequests, name="prayer_requests"),
 
     # API Paths
-    path("liturgy/<int:length>", views.loadLiturgyLength, name="loadLiturgyLength"),
     path("liturgy-navigate/<int:id>", views.loadLiturgy, name="loadLiturgy"),
     path("liturgy-favorite", views.favoriteLiturgy, name="favoriteLiturgy"),
     path("switch-groups", views.switchGroups, name="switchGroups"),

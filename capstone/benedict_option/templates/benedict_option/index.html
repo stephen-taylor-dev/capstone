@@ -18,27 +18,32 @@
                 <button id="select-time" value="60" type="button" class="time btn btn-secondary m-1">1 min.</button>
                 <button id="select-time" value="120" type="button" class="time btn btn-secondary m-1">2 min.</button>
                 <button id="select-time" value="180" type="button" class="time btn btn-secondary m-1">3 min.</button>
-                <button id="select-time" value="240" type="button" class="time btn btn-secondary m-1">5 min.</button>
+                <button id="select-time" value="300" type="button" class="time btn btn-secondary m-1">5 min.</button>
                 <button id="select-time" value="600" type="button" class="time btn btn-secondary m-1">10 min.</button>
-                <button id="watch" type="button" class="watch btn btn-success" value="Start"><i class="bi bi-play-circle"></i> </button>
-                <button id="watch" type="button" class="watch btn btn-danger" value="Stop">Reset Timer</button>
-                {% comment %} <button id="watch" type="button" class="watch btn btn-warning" value="Pause"><i class="bi bi-pause-circle"></i> </button> {% endcomment %}
+                <button id="start-button" type="button" class="watch btn btn-success" value="start"><i class="bi bi-play-circle"></i> </button>
+                <button id="stop-timer" type="button" class="btn btn-danger" value="stop">Reset Timer</button>
             </div>
         </div>
         {% block groupSettings %}
         <div class="col-3 d-flex justify-content-end">
           <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle"  type="button" id="chooseGroupButton" data-bs-toggle="dropdown" aria-expanded="false">
+
+
+            <button class="btn btn-secondary dropdown-toggle" data-value1="{{request.user.active_group.id}}" data-value2="{{request.user.active_group.name}}" type="button" id="listGroupsButton" data-bs-toggle="dropdown" aria-expanded="false">
               Your Current Group: {{request.user.active_group}}
             </button>
+
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <h5 class="dropdown-header">Your Groups</h5>
               <h6 class="dropdown-header text-muted">Click on group to switch.</h6>
               {% for group in userGroups %}
                 {% if group.id == request.user.active_group.id %}
                 {% else %}
+
                   <li class="groups" value="{{ group.id }}"><a class="dropdown-item" href="#"  > {{ group }} </a></li>
-                {% endif %}
+                
+                
+                  {% endif %}
               {% endfor %}
               <div class="dropdown-divider"></div>
               <h6 class="dropdown-header">Group Settings</h6>

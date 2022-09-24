@@ -10,9 +10,11 @@
     <script src='https://8x8.vc/external_api.js' async></script>
     <style>#jaas-container { height: 500px; width: 800px; }</style>
     <script type="text/javascript">
+      const GroupID = listGroupsButton.getAttribute('data-value1');
+      const GroupName = listGroupsButton.getAttribute('data-value2');
       window.onload = () => {
         const api = new JitsiMeetExternalAPI("8x8.vc", {
-          roomName: "vpaas-magic-cookie-31b96db1fde544338e860bf2e63436aa/blah0blahblah",
+          roomName: `vpaas-magic-cookie-31b96db1fde544338e860bf2e63436aa/${GroupName}${GroupID}`,
           parentNode: document.querySelector('#jaas-container')
         });
       }
@@ -24,4 +26,3 @@
      
 
      
-  

@@ -78,15 +78,14 @@
         <div class="col-3">
             <div class=" d-flex justify-content-end">
                 <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" value="{{request.user.current_group.id}}" type="button" id="chooseGroupButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    Your Group: {{request.user.active_group}}
+                  <button class="btn btn-secondary dropdown-toggle" data-value1="{{request.user.active_group.id}}" data-value2="{{request.user.active_group.name}}" type="button" id="listGroupsButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    Your Current Group: {{request.user.active_group}}
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <h5 class="dropdown-header">Your Groups</h5>
                     <h6 class="dropdown-header text-muted">Click on group to switch.</h6>
                     {% for group in userGroups %}
-                      {% if group.id == request.user.current_group.id %}
-                        <li class="groups" value="{{ group.id }}"><a class="dropdown-item active" href="#"  > {{ group }} </a></li>
+                      {% if group.id == request.user.active_group.id %}
                       {% else %}
                         <li class="groups" value="{{ group.id }}"><a class="dropdown-item" href="#"  > {{ group }} </a></li>
                       {% endif %}

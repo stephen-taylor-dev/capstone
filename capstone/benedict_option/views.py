@@ -21,7 +21,7 @@ def index(request):
         userGroups = Group.objects.filter(members=request.user.id)
         
         # Always load a random liturgy on the first load up
-        liturgy = get_object_or_404(Liturgy, pk=random.randint(1, totalLiturgies))
+        liturgy = get_object_or_404(Liturgy, pk=1)
         invites = Group_Invite.objects.filter(receiver=request.user, accepted=False)
         return render(request, "benedict_option/index.html", {
         "liturgy": liturgy,
@@ -39,6 +39,7 @@ def get_item(dictionary, key):
 
 def prayerRequests(request):
     if request.user.is_authenticated:
+        userGroups = Group.objects.filter(members=request.user.id)
         comments = dict()
         prayer_requests = Prayer_Request.objects.filter(
                         group=request.user.active_group).order_by("-date_created").all()
@@ -47,6 +48,7 @@ def prayerRequests(request):
         return render(request, "benedict_option/prayer-requests.html",{
             "prayer_requests": prayer_requests,
             "comments": comments,
+            "userGroups": userGroups
         })
     else:
         return HttpResponseRedirect(reverse("login"))
@@ -69,15 +71,6 @@ def searchLiturgy(request):
 def loadFeed(request):
     return render(request, "benedict_option/feed.html")
 
-def loadLiturgyLength(request, length):
-    liturgies = Liturgy.objects.filter(length=length)
-    liturgy_count = liturgies.count()
-    random_index = 0
-    if liturgy_count >= 1:
-        random_index = random.randint(0, liturgy_count-1)
-    liturgy = liturgies[random_index]
-    jsonLiturgy = liturgy.to_json()
-    return JsonResponse(jsonLiturgy, safe=False)
 
 def loadLiturgy(request, id):
     count = Liturgy.objects.count()
@@ -100,7 +93,7 @@ def pray(request):
         userGroups = Group.objects.filter(members=request.user.id)
         
         # Always load a random liturgy on the first load up
-        liturgy = get_object_or_404(Liturgy, pk=random.randint(1, totalLiturgies))
+        liturgy = get_object_or_404(Liturgy, pk=1)
 
         return render(request, "benedict_option/pray.html", {
         "liturgy": liturgy,

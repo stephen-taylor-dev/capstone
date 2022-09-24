@@ -50,7 +50,7 @@ function stopWatch(){
         clearInterval(timer);
 
 
-        alert('Finished counting down from '+timerSeconds);
+        alert('Your timer is done.');
 
     }else{
 
@@ -65,7 +65,7 @@ function stopWatch(){
 $(document).ready(function(){
     
     
-    $('#select-time').click(function(e){
+    $('.time').click(function(e){
         var inputTime = this.value;
         var htmlOutputTime = inputTime/60;
         timerSeconds = inputTime;
@@ -74,35 +74,27 @@ $(document).ready(function(){
     });
 
     $('.watch').click(function(e){
+        console.log("click");
         e.preventDefault();
+            
+        timerCurrent = 0;
         
-        if($('#watch').val() == 'Start'){
-
-            $('#watch').replaceWith('<button id="watch" type="button" class="btn btn-warning" value="Pause"><i class="bi bi-pause-circle"></i> </button>');
+        timerFinish = new Date().getTime()+(timerSeconds*1000);
+        
+        timer = setInterval('stopWatch()',50);
             
-            timerCurrent = 0;
-            
-            timerFinish = new Date().getTime()+(timerSeconds*1000);
-            
-            timer = setInterval('stopWatch()',50);
-            
-        }
-        else if ($('#watch').val() == 'Pause'){
-            
-            $('#watch').replaceWith('<button id="watch" type="button" class="btn btn-success"  value="Start"><i class="bi bi-play-circle"></i> </button>');
+       
 
-            
-
-        }
-        else{
-
-
-            clearInterval(timer);
-
-        }
 
     });
 
+    $('#stop-timer').click(function(e){ 
+        
+        $('#timer-time').html('0' + ' m');
+        clearInterval(timer);
+        drawTimer(0);
+
+    })
 
 
 });
