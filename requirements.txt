@@ -7,3 +7,5 @@ psycopg2
 pytz
 urllib3==1.26.12
 whitenoise==6.2.0
+python-decouple
+whitenoise
