@@ -1,0 +1,74 @@
+{% extends "benedict_option/layout.html" %}
+
+
+{% block body %}
+<div class="col">
+  <div class="container">
+      <div class="row mt-2">
+          <div class="col-3">
+          </div>
+          <div class="col-6">
+            <p class="fs-4">Search for a Specific Liturgy</p>
+              <div class="container">
+              <!-- Search -->
+              <label for="searchLiturgyTitle">Search by Title or Author </label>
+              <form action="{% url 'searchLiturgy' %}" method="get">
+
+                {% comment %} Search Title {% endcomment %}
+                <div class="form-group">
+                  <input type="text" name="title-author" class="form-control" id="searchTitleAuthor" aria-describedby="searchTitle" placeholder="Enter title or author of a liturgy you are searching for...">
+                </div>
+                <button type="submit" class="btn btn-secondary my-2">Search</button>
+              </form>
+              <hr>
+                {% comment %} Search for String {% endcomment %}
+              <label for="searchLiturgyPhrase">Search by Phrase </label>
+              <form action="{% url 'searchLiturgy' %}" method="get">
+                <div class="form-group">
+                  <input type="text" name="phrase" class="form-control" id="searchString" aria-describedby="searchString" placeholder="Enter a phrase from a liturgy you are searching for...">
+                </div>
+                <button type="submit" class="btn btn-secondary my-2">Search</button>
+              </div>
+              </form>
+            <hr>
+              <div id="search-results">
+                <p class="fs-5">Search Results</p>
+                {% if search_results %}
+                <p class="fs-6 fw-light"> {{num_results}} liturgies matching your search... </p>
+                {% for result in search_results %}
+              
+                  <div class="card border rounded shadow-sm mb-3">
+                    <div class="card-body text-left ">
+                        <div class="row">
+                            <div id="liturgy-title" class="col mb-0">
+                                
+                                  <p class="fs-4"><i class="bi bi-book"></i> {{result.title|title}}</p>
+                                
+                            </div>
+                            <div class="col d-flex justify-content-end mb-0" id="liturgy-author">
+                                <p class="fs-6 fw-light text-muted">by {{result.author}}</p>
+                            </div>
+                        </div>
+
+                        <div class="rounded-3 p-2 "  id="liturgy-text">
+                            <p class="ms-2 rounded border-primary">{{result.text}}
+                                
+                        </div>
+                      </div>
+                  </div>
+                  
+                  {% endfor %}
+                </div>
+                {% else %}
+
+                {% endif %}
+                
+              </div>
+              <div class="col-3">
+              </div>
+            </div>
+      </div>
+  </div>
+</div>
+
+ {% endblock %}

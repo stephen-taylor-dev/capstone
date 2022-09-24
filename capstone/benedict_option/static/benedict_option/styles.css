@@ -14,9 +14,19 @@
 }
 
 #text {
-    height: 500px;
+    height: 560px;
     overflow-y: scroll;
 }
+
+#text1 {
+    height: 220px;
+    
+}
+.form-check-input:checked {
+    background-color: grey;
+    border-color: grey;
+}
+
 
 /* h1{
 
@@ -28,3 +38,4 @@ p{
     font-family: 'Herculanum';
 
 } */
+
