@@ -21,7 +21,17 @@ def index(request):
         userGroups = Group.objects.filter(members=request.user.id)
         
         # Always load a random liturgy on the first load up
-        liturgy = get_object_or_404(Liturgy, pk=1)
+        try:
+            liturgy = get_object_or_404(Liturgy, pk=1)
+        except:
+            liturgy = Liturgy.objects.create(
+                    author='David',
+                    text='1 Blessed is the man that walketh not in the counsel of the ungodly, nor standeth in the way of sinners, nor sitteth in the seat of the scornful.\n\n2 But his delight is in the law of the Lord; and in his law doth he meditate day and night\n\n3 And he shall be like a tree planted by the rivers of water, that bringeth forth his fruit in his season; his leaf also shall not wither; and whatsoever he doeth shall prosper.\n\n4 The ungodly are not so: but are like the chaff which the wind driveth away.\n\n5 Therefore the ungodly shall not stand in the judgment, nor sinners in the congregation of the righteous.\n\n6 For the Lord knoweth the way of the righteous: but the way of the ungodly shall perish.',
+                    title='Psalm 1',
+                    type='Psalm',
+                    length= 3)
+            liturgy.save()
+
         invites = Group_Invite.objects.filter(receiver=request.user, accepted=False)
         return render(request, "benedict_option/index.html", {
         "liturgy": liturgy,
