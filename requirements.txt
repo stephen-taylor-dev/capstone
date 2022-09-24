@@ -1,4 +1,5 @@
-
+asgiref @ file:///tmp/build/80754af9/asgiref_1625643473416/work
+certifi @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_83242e7e-f82d-4a71-8ef2-9d71d212d249gu_wxmeq/croots/recipe/certifi_1655968827803/work/certifi
 charset-normalizer==2.1.1
 dj-database-url==1.0.0
 Django @ file:///tmp/build/80754af9/django_1625585912945/work
@@ -17,4 +18,3 @@ typing_extensions @ file:///opt/conda/conda-bld/typing_extensions_1647553014482/
 urllib3==1.26.12
 whitenoise==6.2.0
 yarg==0.1.9
-django-mathfilters
