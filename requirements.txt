@@ -1,9 +1,8 @@
 dj-database-url==1.0.0
-Django @ file:///tmp/build/80754af9/django_1625585912945/work
 django-heroku==0.3.1
 django-mathfilters==1.0.0
 gunicorn==20.1.0
-psycopg2 @ file:///opt/concourse/worker/volumes/live/7541fe58-2a45-4073-5d69-313e733fc729/volume/psycopg2_1612298592535/work
-pytz @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_1caf090c-01b6-4973-adac-d2eb884a674e7zonb9eb/croots/recipe/pytz_1654762641285/work
+psycopg2 
+pytz 
 urllib3==1.26.12
 whitenoise==6.2.0
