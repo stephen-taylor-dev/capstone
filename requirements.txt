@@ -11,4 +11,3 @@ pytz
 sqlparse
 urllib3==1.26.12
 whitenoise==6.2.0
-tk
