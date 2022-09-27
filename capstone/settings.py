@@ -8,7 +8,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import dj_database_url
 import os
-from django.test.runner import DiscoverRunner
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -87,14 +86,6 @@ DATABASES = {
     }
 }
 
-if "DATABASE_URL" in os.environ:
-    # Configure Django for DATABASE_URL environment variable.
-    DATABASES["default"] = dj_database_url.config(
-        conn_max_age=MAX_CONN_AGE, ssl_require=True)
-
-    # Enable test database if found in CI environment.
-    if "CI" in os.environ:
-        DATABASES["default"]["TEST"] = DATABASES["default"]
 
 
 AUTH_USER_MODEL = "benedict_option.User"
