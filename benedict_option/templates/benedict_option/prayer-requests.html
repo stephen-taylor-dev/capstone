@@ -1,6 +1,4 @@
 {% extends "benedict_option/layout.html" %}
-{% load static  %}
-<script src="{% static 'benedict_option/prayer_request_script.js' %}"></script>
 
 {% block body %}
 {{ request.user.id|json_script:"user_id" }}

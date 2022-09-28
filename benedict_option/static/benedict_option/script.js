@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     listGroupsButton.setAttribute('data-value2', data.group.name);
                     groupButton.setAttribute('value', prevGroupID );
                     groupButton.innerHTML = `<a class="dropdown-item" href="#">${prevGroupName} </a>`
-                    if (window.location.pathname == '/prayer-request') {
+                    if (window.location.pathname == '/prayer-request' || window.location.pathname == '/pray') {
                         location.reload();
                     }
                 })  
@@ -184,6 +184,27 @@ document.addEventListener('DOMContentLoaded', function() {
         })
                 
     
+        if (window.location.pathname == '/prayer-request') {
+            // Create prayer requests
+            createPRequest = document.querySelector('#create-prequest-button');
+            createPRequest.addEventListener('click', function() {
+                const content = document.querySelector('#prayer-request-input').value;
+                fetch("/create-prequest", {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        content: content,
+                    })
+                    
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Created Prayer Request")
+
+                })  
+
+        })
+        }
+
     // // Favorite Liturgy Button
     // document.querySelectorAll('#favorite-liturgy').forEach(favoriteButton => {
     //     favoriteButton.addEventListener('click', function() {
