@@ -13,15 +13,11 @@
     width: 500px;
 }
 
-#text {
+#text-block {
     height: 560px;
     overflow-y: scroll;
 }
 
-#text1 {
-    height: 220px;
-    
-}
 .form-check-input:checked {
     background-color: grey;
     border-color: grey;
