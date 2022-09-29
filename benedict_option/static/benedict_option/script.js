@@ -55,9 +55,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     listGroupsButton.setAttribute('data-value2', data.group.name);
                     groupButton.setAttribute('value', prevGroupID );
                     groupButton.innerHTML = `<a class="dropdown-item" href="#">${prevGroupName} </a>`
-                    if (window.location.pathname == '/prayer-request' || window.location.pathname == '/pray') {
+                    // if (window.location.pathname == '/prayer-request' || window.location.pathname == '/pray') {
                         location.reload();
-                    }
+                    // }
                 })  
             }
         })
