@@ -19,9 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.querySelector("#liturgy-title").innerHTML = `<i class="bi bi-book"></i> ` + data.title;
                     document.querySelector("#liturgy-author").innerHTML = "by " + data.author;
                     document.querySelector("#prev-button").value = data.id - 1;
-                    // if (liturgyID  == totalLiturgies){
-                        
-                    //}
                     document.querySelector("#next-button").value = data.id + 1;
                     //document.querySelector("#liturgy-id").innerHTML = "About " + data.length + " min.";
                     document.querySelector("#liturgy-text").innerHTML = data.text;
@@ -152,7 +149,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 fetch("/respond-invite", {
                     method: 'PUT',
                     body: JSON.stringify({
-                        // records who liked the post. based on the user logged in
                         invitation_id: inviteID,
                         group_id: groupID,
                         accepted: true,
@@ -168,7 +164,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 fetch("/respond-invite", {
                     method: 'PUT',
                     body: JSON.stringify({
-                        // records who liked the post. based on the user logged in
                         invitation_id: inviteID,
                         accepted: false,
                         delete: true,  

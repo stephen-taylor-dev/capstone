@@ -90,7 +90,6 @@ B.save()
 C.save()
 D.save()
 E.save()
-
 F.save()
 G.save()
 H.save()
@@ -103,18 +102,3 @@ item = Group.objects.create(
 
 )
 
-psalms = [A, B, C, D, E]
-for psalm in psalms:
-    psalm.save()
-
-Group.objects.create(
-    name='Church',
-)
-
-password = 'password'
-
-a = User.objects.create_user(
-    username='john',
-    email='john@email.com',
-    password=password,
-)

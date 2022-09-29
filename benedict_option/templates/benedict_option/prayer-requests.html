@@ -73,31 +73,46 @@
             {% endfor %}
         </div>
         {% block groupSettings %}
-        <div class="col-3">
-            <div class=" d-flex justify-content-end">
-                <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" data-value1="{{request.user.active_group.id}}" data-value2="{{request.user.active_group.name}}" type="button" id="listGroupsButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    Your Current Group: {{request.user.active_group}}
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <h5 class="dropdown-header">Your Groups</h5>
-                    <h6 class="dropdown-header text-muted">Click on group to switch.</h6>
-                    {% for group in userGroups %}
-                      {% if group.id == request.user.active_group.id %}
-                      {% else %}
-                        <li class="groups" value="{{ group.id }}"><a class="dropdown-item" href="#"  > {{ group }} </a></li>
-                      {% endif %}
-                    {% endfor %}
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header">Group Settings</h6>
-                    <!-- Button trigger Create Group modal -->
-                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createGroupForm"> <i class="bi bi-plus"></i> Create Group </a></li>
-                    <!-- Button trigger Invite modal -->
-                    <li><a  class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#inviteGroupForm"> <i class="bi bi-person-plus-fill"></i> Invite to Group </a></li>
-      
-                  </ul>
-                </div>
-              </div>
+        <div class="col-3 d-flex justify-content-end">
+          <div class="dropdown">
+
+
+            <button class="btn btn-secondary dropdown-toggle" data-value1="{{request.user.active_group.id}}" data-value2="{{request.user.active_group.name}}" type="button" id="listGroupsButton" data-bs-toggle="dropdown" aria-expanded="false">
+              Your Current Group: {{request.user.active_group}}
+            </button>
+
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <h5 class="dropdown-header">Your Groups</h5>
+              <h6 class="dropdown-header text-muted">Click on group to switch.</h6>
+              {% for group in userGroups %}
+                {% if group.id == request.user.active_group.id %}
+                {% else %}
+
+                  <li class="groups" value="{{ group.id }}"><a class="dropdown-item" href="#"  > {{ group }} </a></li>
+                
+                
+                  {% endif %}
+              {% endfor %}
+              <div class="dropdown-divider"></div>
+              <h6 class="dropdown-header">Group Settings</h6>
+              <!-- Button trigger Create Group modal -->
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createGroupForm"> <i class="bi bi-plus"></i> Create Group </a></li>
+              <!-- Button trigger Invite modal -->
+              <li><a  class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#inviteGroupForm"> <i class="bi bi-person-plus-fill"></i> Invite to Group </a></li>
+              <hr>              
+              <h6 class="dropdown-header">Group Invites</h6>
+              {% if invites.count == 0 %}
+                <li class="groups" value=""><a class="dropdown-item" href="#">No pending invitations</a></li>
+              {% else %}
+              
+              <h6 class="dropdown-header">Pending Invitations...</h6>
+                {% for invite in invites %}
+
+                  <li> <a class="dropdown-item" href="#" id="group-invite" data-bs-toggle="modal" data-bs-target="#respondInvitationForm" data-value1="{{invite.sender|title}}" data-value2="{{invite.group.name|title}}" data-value3="{{invite.timestamp|date:"P N j"}}" data-value4="{{ invite.id }}" data-value5="{{invite.group.id}}">{{ invite.group.name }}</a></li>
+                {% endfor %}
+              {% endif %}
+            </ul>
+          </div>
         </div>
         {% endblock %}
     </div>
@@ -125,8 +140,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss   nbm                          ="modal">Close</button>
-        <button type="button" data-value1="{{ request.user.active_group.id }}" id="sendGroupInvite" class="btn btn-primary">Send Invite(s)</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" data-value1="{{ request.user.active_group.id }}" data-bs-dismiss="modal" id="sendGroupInvite" class="btn btn-primary">Send Invite(s)</button>
       </div>
     </div>
   </div>
@@ -137,7 +152,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="createGroupFormLabel">Create a new group and add friends at the same time.</h5>
+        <h5 class="modal-title" id="createGroupFormLabel">Create a new group.</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -146,24 +161,22 @@
         <div class="md-form mb-5">
           <label >Group Name</label>
           <i class="fas fa-envelope prefix grey-text"></i>
-          <input type="text" id="createGroupFormName" class="form-control">
+          <input type="text" id="createGroupFormName" class="form-control" data-bs-dismiss="modal">
         </div>
 
-        <p class="text-muted">Enter your friends email addresses to add them to your group.</p>
-        <div class="md-form mb-5">
-          <label data-error="wrong" data-success="right" for="defaultForm-email">Email Addresses</label>
-          <i class="fas fa-envelope prefix grey-text"></i>
-          <input type="email" id="createGroupFormEmails" class="form-control validate">
-        </div>
-      </div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" id="createGroupInvite" class="btn btn-primary">Create Group</button>
+        <button type="button" id="createGroupInvite" data-bs-dismiss="modal" class="btn btn-primary">Create Group</button>
       </div>
     </div>
   </div>
 </div>
 
+{% endblock %}
+
+
+</div>
 <!-- Respond to Invitation -->
 <div class="modal fade" id="respondInvitationForm" tabindex="-1" aria-labelledby="respondFormInvitationLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -179,12 +192,13 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" id="respondToInviteDelete" class="btn btn-danger">Delete</button>
-        <button type="button" id="respondToInvite" class="btn btn-primary">Accept</button>
+        <button type="button" class="submitResponse btn btn-danger" data-bs-dismiss="modal" id="respondToInviteDelete" >Delete</button>
+        <button type="button" class="submitResponse btn btn-primary" data-bs-dismiss="modal" id="respondToInviteAccept" >Accept</button>
       </div>
     </div>
   </div>
 </div>
+
 {% endblock %}
 
 {% endblock %}

@@ -77,10 +77,7 @@ def searchLiturgy(request):
         "num_results": num_results,
     })
 
-def loadFeed(request):
-    return render(request, "benedict_option/feed.html")
-
-
+# Function to return liturgy. Initiated by JS on front-end
 def loadLiturgy(request, id):
     count = Liturgy.objects.count()
     if id > count:
@@ -95,7 +92,7 @@ def search(request):
     return render(request, "benedict_option/search.html",)
 
 
-# refactor this - copied from index function
+# Live prayer group
 def pray(request):
     if request.user.is_authenticated:
         totalLiturgies = Liturgy.objects.count()
@@ -223,14 +220,6 @@ def switchGroups(request):
            "group": jsonGroup,
            "message": "Switched groups successfully."
            }, safe=False, status=201)
-
- 
-def unfollow(request):
-    if request.method == "POST":
-        user = User.objects.get(pk=request.user.id)
-        # Removes the user's profile to authenticated user's following list
-        user.following.remove(int(request.POST["user_profile"]))
-        return HttpResponseRedirect(reverse("index"))
 
 
 # Copied from CS33a Project 4. Modified url paths
