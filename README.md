@@ -19,4 +19,4 @@ Most of the front end HTML functionality is all found in the directory named /te
 The directory /static hosts all the Javascript functionality. Script.js runs all the features for the front end and Countdown.js defines the timer functionality. 
 
 
-- Stephen Taylor
+Stephen Taylor
