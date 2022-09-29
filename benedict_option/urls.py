@@ -7,7 +7,6 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
     path("pray", views.pray, name="pray"),
-    path("feed", views.loadFeed, name="feed"),
     path("search", views.search, name="search"),
     path("prayer-request", views.prayerRequests, name="prayer_requests"),
 
