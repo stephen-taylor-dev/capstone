@@ -1,6 +1,6 @@
 # Benedict Option
 ## A communal-liturgical prayer app
-
+<img width="1000" alt="interface" src="https://user-images.githubusercontent.com/47441158/193173899-814ce1a8-cfb5-4c29-a616-a383ad17d4d3.png">
 ### General Info
 This is the source code for my Computer Science Senior Capstone project at Sattler College.
 
@@ -32,7 +32,7 @@ I designed this project for my senior Capstone project at Sattler College. I wan
 My hope is that my capstone project can contribute to the kingdom by helping others build strong communities through praying liturgies together. I started this project out of a deeper desire to develop a lifestyle of prayer and connection with God for myself. Part of my goal is to limit technology’s ability to distract us from God and instead use it to help us focus on Him. I hope that people can develop habits around praying these liturgies to shape them more into the image of Christ. Rather than engaging with the new liturgies that the current social networks teach them to live out which often teach consumerism and independence. I personally am worried about many of my generation may be turning more towards exciting but empty promises that shiny social apps offer instead of the abundant life promised to faithful Christians. My hope is that my app can help people discover that abundant life through praying liturgical prayers in the app. 
 
 
-<img width="1586" alt="interface" src="https://user-images.githubusercontent.com/47441158/193173899-814ce1a8-cfb5-4c29-a616-a383ad17d4d3.png">
+
 
 
 
