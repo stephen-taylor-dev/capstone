@@ -103,7 +103,7 @@ def pray(request):
 
         return render(request, "benedict_option/pray.html", {
         "liturgy": liturgy,
-        "totalliturgies": totalLiturgies,
+        "totalLiturgies": totalLiturgies,
         "userGroups": userGroups,
         })
     else:
