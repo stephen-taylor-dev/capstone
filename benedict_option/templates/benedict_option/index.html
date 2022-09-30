@@ -115,7 +115,7 @@
                     <div class="row p-1">
                         <div class="col d-flex justify-content-between">
                             <button id="prev-button" type="button" class="navigate btn btn-secondary " value="{{ liturgy.id|sub:1 }}"><i class="bi bi-arrow-left-short"> </i>Prev. Liturgy</button>
-                            <a id="random-button" class="random btn btn-secondary " href="#" role="button"> Random Liturgy</a>
+                            {% comment %} <a id="random-button" class="random btn btn-secondary " href="#" role="button"> Random Liturgy</a> {% endcomment %}
                             <button id="next-button" type="button" class="navigate btn btn-secondary " data-value1="{{ totalLiturgies }}" value="{{ liturgy.id|addition:1 }}">Next Liturgy <i class="bi bi-arrow-right-short"></i></button>
                             
                           </div>

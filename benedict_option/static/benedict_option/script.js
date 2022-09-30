@@ -1,6 +1,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     const user_id = JSON.parse(document.getElementById('user_id').textContent);
+    
 
     // Prev and Next Button Actions
     document.querySelectorAll('.navigate').forEach(navigateButton => {
@@ -98,6 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 console.log("created group and sent invites")
+                location.reload();
             })  
         })
             
@@ -119,6 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(response => response.json())
                 .then(data => {
                     console.log("create comment")
+                    location.reload();
                 })  
             })
         })
@@ -158,6 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(response => response.json())
                 .then(data => {
                     console.log("accepted invitation")
+                    location.reload();
                 })  
             }
             else {
@@ -172,6 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(response => response.json())
                 .then(data => {
                     console.log("deleted invitation")
+                    location.reload();
                 })  
             }
 

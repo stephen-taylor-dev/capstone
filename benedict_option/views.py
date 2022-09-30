@@ -67,9 +67,9 @@ def searchLiturgy(request):
     query_dict = request.GET
     # Check to see if user searched for Title and Author or Phrase
     if query_dict.get('title-author') == None:
-        search = Liturgy.objects.filter(text__contains=query_dict['phrase'])
+        search = Liturgy.objects.filter(text__icontains=query_dict['phrase'])
     else:
-        search = Liturgy.objects.filter(title__contains=query_dict['title-author']) | Liturgy.objects.filter(author__contains=query_dict['title-author'])
+        search = Liturgy.objects.filter(title__icontains=query_dict['title-author']) | Liturgy.objects.filter(author__icontains=query_dict['title-author'])
     print(search)
     num_results = search.count
     return render(request, "benedict_option/search.html", {
