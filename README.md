@@ -1,6 +1,8 @@
 # Benedict Option
 ## A communal-liturgical prayer app
+
 <img width="1000" alt="interface" src="https://user-images.githubusercontent.com/47441158/193173899-814ce1a8-cfb5-4c29-a616-a383ad17d4d3.png">
+
 ### General Info
 This is the source code for my Computer Science Senior Capstone project at Sattler College.
 
